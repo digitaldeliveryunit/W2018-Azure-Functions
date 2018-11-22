@@ -4,6 +4,7 @@ using com.petronas.myevents.api.Services.Interfaces;
 using System.Linq;
 using com.petronas.myevents.api.Constants;
 using com.petronas.myevents.api.Repositories.Interfaces;
+using Microsoft.Azure.Documents.Client;
 
 namespace com.petronas.myevents.api.Services
 {
@@ -17,7 +18,12 @@ namespace com.petronas.myevents.api.Services
         }
         public User GetCurrentUser()
         {
-            return _userRepository.GetAll().FirstOrDefault(x => !x.IsDeleted && x.Id == DefaultValue.UserId);
+            var feedOptions = new FeedOptions
+            {
+                MaxItemCount = 1,
+                EnableCrossPartitionQuery = true
+            };
+            return _userRepository.GetAll(x => !x.IsDeleted && x.Id == DefaultValue.UserId, feedOptions).FirstOrDefault();
         }
     }
 }

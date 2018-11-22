@@ -50,6 +50,14 @@ namespace com.petronas.myevents.api.Repositories
 
         public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate, FeedOptions feedOptions)
         {
+            if(feedOptions== null)
+            {
+                feedOptions = new FeedOptions
+                {
+                    MaxItemCount = -1,
+                    EnableCrossPartitionQuery = true
+                };
+            }
             var result = _client.CreateDocumentQuery<T>(_collectionUri, feedOptions).Where(predicate);
             return result;
         }

@@ -7,6 +7,7 @@ using com.petronas.myevents.api.Models;
 using com.petronas.myevents.api.Repositories.Interfaces;
 using com.petronas.myevents.api.Services.Interfaces;
 using com.petronas.myevents.api.ViewModels;
+using Microsoft.Azure.Documents.Client;
 
 namespace com.petronas.myevents.api.Services
 {
@@ -24,7 +25,13 @@ namespace com.petronas.myevents.api.Services
 
         public async Task<bool> Bookmark(string eventId, string userId)
         {
-            var isBookmark = _bookmarkRepository.GetAll().Any(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId);
+            var feedOptions = new FeedOptions
+            {
+                MaxItemCount = 1,
+                EnableCrossPartitionQuery = true
+            };
+
+            var isBookmark = _bookmarkRepository.GetAll(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId, null).Any();
             if (!isBookmark)
             {
                 var bookmark = new Bookmark()
@@ -34,7 +41,7 @@ namespace com.petronas.myevents.api.Services
                     Id = Guid.NewGuid().ToString(),
                     Discriminator = CollectionNameConstant.MODEL_BOOKMARK
                 };
-                var ev = _eventRepository.GetAll().FirstOrDefault(x => !x.IsDeleted && x.Id == eventId);
+                var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
                 ev.Bookmarks.Add(bookmark);
                 await _bookmarkRepository.Add(bookmark);
                 await _eventRepository.Update(ev);
@@ -44,8 +51,14 @@ namespace com.petronas.myevents.api.Services
 
         public async Task<bool> UnBookmark(string eventId, string userId)
         {
-            var bookmarks = _bookmarkRepository.GetAll().Where(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId).ToList();
-            var ev = _eventRepository.GetAll().FirstOrDefault(x => !x.IsDeleted && x.Id == eventId);
+            var feedOptions = new FeedOptions
+            {
+                MaxItemCount = 1,
+                EnableCrossPartitionQuery = true
+            };
+
+            var bookmarks = _bookmarkRepository.GetAll(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId, null).ToList();
+            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
             foreach (var item in bookmarks)
             {
                 item.IsDeleted = true;
@@ -58,14 +71,20 @@ namespace com.petronas.myevents.api.Services
 
         public EventResponse GetById(string id)
         {
+            var feedOptions = new FeedOptions
+            {
+                MaxItemCount = 1,
+                EnableCrossPartitionQuery = true
+            };
+
             var currentUser = _userService.GetCurrentUser();
-            var ev = _eventRepository.GetAll().Where(x => x.Id == id && !x.IsDeleted).FirstOrDefault();
+            var ev = _eventRepository.GetAll(x => x.Id == id && !x.IsDeleted, feedOptions).FirstOrDefault();
             return ev == null ? null : GetEventResponse(ev);
         }
 
         public IEnumerable<EventResponse> GetFeaturedEvents(int skip, int take)
         {
-            var ev = _eventRepository.GetAll().Where(x => !x.IsDeleted && x.IsFeatured).Skip(skip).Take(take).OrderBy(x => x.EventDateTo).ToList();
+            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.IsFeatured, null).Skip(skip).Take(take).OrderBy(x => x.EventDateTo).ToList();
             foreach (var e in ev)
             {
                 yield return GetEventResponse(e);
@@ -75,7 +94,7 @@ namespace com.petronas.myevents.api.Services
         public IEnumerable<EventResponse> GetPastEvents(int skip, int take)
         {
             var user = _userService.GetCurrentUser();
-            var ev = _eventRepository.GetAll().Where(x => !x.IsDeleted && x.EventDateTo < DateTime.UtcNow && x.Members.Any(m => m.UserId == user.Id && !m.IsDeleted)).Skip(skip).Take(take).OrderBy(x => x.EventDateTo).ToList();
+            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.EventDateTo < DateTime.UtcNow && x.Members.Any(m => m.UserId == user.Id && !m.IsDeleted), null).Skip(skip).Take(take).OrderBy(x => x.EventDateTo).ToList();
             foreach (var e in ev)
             {
                 yield return GetEventResponse(e);
@@ -84,7 +103,7 @@ namespace com.petronas.myevents.api.Services
 
         public IEnumerable<EventResponse> GetUpcomingAllEvents(int skip, int take)
         {
-            var ev = _eventRepository.GetAll().Where(x => !x.IsDeleted && x.EventDateTo > DateTime.UtcNow).Skip(skip).Take(take).OrderBy(x => x.EventDateTo).ToList();
+            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.EventDateTo > DateTime.UtcNow, null).Skip(skip).Take(take).OrderBy(x => x.EventDateTo).ToList();
             foreach (var e in ev)
             {
                 yield return GetEventResponse(e);
@@ -94,9 +113,9 @@ namespace com.petronas.myevents.api.Services
         public IEnumerable<EventResponse> GetUpcomingEvents(int skip, int take)
         {
             var user = _userService.GetCurrentUser();
-            var ev = _eventRepository.GetAll().Where(x => !x.IsDeleted && x.EventDateTo > DateTime.UtcNow
+            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.EventDateTo > DateTime.UtcNow
                                     && (x.Members.Any(m => !m.IsDeleted && m.UserId == user.Id)
-                                        || x.Bookmarks.Any(b => !b.IsDeleted && b.UserId == user.Id)))
+                                        || x.Bookmarks.Any(b => !b.IsDeleted && b.UserId == user.Id)), null)
                              .Skip(skip).Take(take).OrderBy(x => x.EventDateTo).ToList();
             foreach (var e in ev)
             {
@@ -133,7 +152,7 @@ namespace com.petronas.myevents.api.Services
         public IEnumerable<EventResponse> Search(string searchKey, int skip, int take)
         {
             var user = _userService.GetCurrentUser();
-            var ev = _eventRepository.GetAll().Where(x => !x.IsDeleted && x.EventName.ToLower().Contains(searchKey.ToLower()))
+            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.EventName.ToLower().Contains(searchKey.ToLower()), null)
                              .Skip(skip).Take(take).OrderBy(x => x.EventDateTo).ToList();
             foreach (var e in ev)
             {

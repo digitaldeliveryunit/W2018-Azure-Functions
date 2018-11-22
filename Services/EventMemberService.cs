@@ -5,6 +5,7 @@ using com.petronas.myevents.api.Constants;
 using com.petronas.myevents.api.Models;
 using com.petronas.myevents.api.Repositories.Interfaces;
 using com.petronas.myevents.api.Services.Interfaces;
+using Microsoft.Azure.Documents.Client;
 
 namespace com.petronas.myevents.api.Services
 {
@@ -21,12 +22,22 @@ namespace com.petronas.myevents.api.Services
         }
         public EventMember CheckExistence(string eventid, string userId)
         {
-            return _eventMemberRepository.GetAll().FirstOrDefault(x => !x.IsDeleted && x.EventId == eventid && x.UserId == userId);
+            var feedOptions = new FeedOptions
+            {
+                MaxItemCount = 1,
+                EnableCrossPartitionQuery = true
+            };
+            return _eventMemberRepository.GetAll(x => !x.IsDeleted && x.EventId == eventid && x.UserId == userId, feedOptions).FirstOrDefault();
         }
 
         public async Task<bool> Join(string eventId, string userId)
         {
-            var joined = _eventMemberRepository.GetAll().FirstOrDefault(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId);
+            var feedOptions = new FeedOptions
+            {
+                MaxItemCount = 1,
+                EnableCrossPartitionQuery = true
+            };
+            var joined = _eventMemberRepository.GetAll(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId, feedOptions).FirstOrDefault();
             if (joined == null)
             {
                 var newMember = new EventMember()
@@ -37,7 +48,7 @@ namespace com.petronas.myevents.api.Services
                     UserId = userId,
                     EventId = eventId
                 };
-                var ev = _eventRepository.GetAll().FirstOrDefault(x => !x.IsDeleted && x.Id == eventId);
+                var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
                 ev.Members.Add(newMember);
                 await _eventMemberRepository.Add(newMember);
                 await  _eventRepository.Update(ev);
@@ -52,8 +63,14 @@ namespace com.petronas.myevents.api.Services
 
         public async Task<bool> UnJoin(string eventId, string userId)
         {
-            var joined = _eventMemberRepository.GetAll().Where(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId).ToList();
-            var ev = _eventRepository.GetAll().FirstOrDefault(x => !x.IsDeleted && x.Id == eventId);
+            var feedOptions = new FeedOptions
+            {
+                MaxItemCount = 1,
+                EnableCrossPartitionQuery = true
+            };
+
+            var joined = _eventMemberRepository.GetAll(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId, null).ToList();
+            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
             foreach (var item in joined)
             {
                 item.IsDeleted = true;

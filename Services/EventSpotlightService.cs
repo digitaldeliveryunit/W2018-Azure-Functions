@@ -17,7 +17,7 @@ namespace com.petronas.myevents.api.Services
         }
         public IEnumerable<EventSpotlightResponse> GetSpotlights(string eventId, int skip, int take)
         {
-            var spotlightList = _spotlightRepository.GetAll().Where(x => !x.IsDeleted && x.EventId == eventId).Skip(skip).Take(take);
+            var spotlightList = _spotlightRepository.GetAll(x => !x.IsDeleted && x.EventId == eventId, null).Skip(skip).Take(take);
 
             if (spotlightList.Any())
             {
