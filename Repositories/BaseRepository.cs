@@ -56,6 +56,12 @@ namespace com.petronas.myevents.api.Repositories
             return result;
         }
 
+        public async Task<Document> Add(T item)
+        {
+            var result = await _client.CreateDocumentAsync(_collectionUri, item, null, false);
+            return result.Resource;
+        }
+
         private static DocumentClient InitializeDocumentClient()
         {
             var endpoint = new Uri(Environment.GetEnvironmentVariable(AppSettings.DbEndpoint));

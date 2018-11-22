@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace com.petronas.myevents.api.Models
 {
@@ -8,6 +9,7 @@ namespace com.petronas.myevents.api.Models
     {
         [Key]
         public string Id { get; set; }
+        [JsonProperty("eventName")]
         public string EventName { get; set; }
         public string EventDescription { get; set; }
         public DateTime EventDateFrom { get; set; }

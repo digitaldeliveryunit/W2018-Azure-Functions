@@ -30,9 +30,7 @@ namespace Petronas.Services.Social.Functions
                 switch (request.Method)
                 {
                     case RequestMethods.Get:
-                        if (eventType == "upcoming")
-                            return new OkObjectResult(eventService.GetUpcomingAllEvents(0, 10));
-                        return new OkResult();
+                        return new OkObjectResult(eventService.GetUpcomingAllEvents(0, 10));
                     case RequestMethods.Post:
                         return new OkResult();
                     case RequestMethods.Put:

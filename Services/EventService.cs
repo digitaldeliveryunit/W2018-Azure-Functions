@@ -20,12 +20,17 @@ namespace com.petronas.myevents.api.Services
 
         public IEnumerable<EventResponse> GetUpcomingAllEvents(int skip, int take)
         {
-            var ev = GetAll().Where(x => !x.IsDeleted && x.EventDateTo > DateTime.Now).Skip(skip).Take(take).OrderBy(x => x.EventDateTo).ToList();
+            var ev = GetAll().Where(x => !x.IsDeleted && x.EventDateTo > DateTime.Now).ToList();
             foreach (var e in ev)
             {
                 yield return GetEventResponse(e);
             }
         }
+
+        // public Event AddNewEvent()
+        // {
+
+        // }
 
         private IQueryable<Event> GetAll()
         {
@@ -35,7 +40,7 @@ namespace com.petronas.myevents.api.Services
 
         private EventResponse GetEventResponse(Event _event)
         {
-            var userId = "Whatever";
+            var userId = "Mr. Hung"; // Just testing
             return new EventResponse()
             {
                 EventId = _event.Id,
@@ -50,11 +55,11 @@ namespace com.petronas.myevents.api.Services
                 Venue = _event.Venue.VenueName,
                 IsFeatured = _event.IsFeatured,
                 SurveyUrl = _event.SurveyUrl,
-                SurveyResultUrl = _event.SurveyResultUrl,
-                IsBookmark = _event.Bookmarks.Any(x => !x.IsDeleted && x.User.Id == userId),
-                UserStatus = _event.Members.Any(x => !x.IsDeleted && x.User.Id == userId) ?
-                                   _event.Members.FirstOrDefault(x => !x.IsDeleted && x.User.Id == userId).EventMemberStatus
-                                   : UserStatus.NEW.ToString()
+                SurveyResultUrl = _event.SurveyResultUrl//,
+                // IsBookmark = _event.Bookmarks.Any(x => !x.IsDeleted && x.User.Id == userId),
+                // UserStatus = _event.Members.Any(x => !x.IsDeleted && x.User.Id == userId) ?
+                //                    _event.Members.FirstOrDefault(x => !x.IsDeleted && x.User.Id == userId).EventMemberStatus
+                //                    : UserStatus.NEW.ToString()
             };
         }
 
