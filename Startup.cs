@@ -40,23 +40,23 @@ namespace com.petronas.myevents.api
                 var services = new ServiceCollection();
 
                 services.AddScoped<IEventRepository, EventRepository>();
-                // services.AddScoped<IBookmarkRepository, BookmarkRepository>();
-                // services.AddScoped<IEventMemberRepository, EventMemberRepository>();
-                // services.AddScoped<ILocationRepository, LocationRepository>();
-                // services.AddScoped<IMediaRepository, MediaRepository>();
-                // services.AddScoped<ISessionRepository, SessionRepository>();
-                // services.AddScoped<ISpotlightRepository, SpotlightRepository>();
-                // services.AddScoped<ISubSessionRepository, SubSessionRepository>();
-                // services.AddScoped<IUserRepository, UserRepository>();
-                // services.AddScoped<IVenueRepository, VenueRepository>();
+                services.AddScoped<IBookmarkRepository, BookmarkRepository>();
+                services.AddScoped<IEventMemberRepository, EventMemberRepository>();
+                services.AddScoped<ILocationRepository, LocationRepository>();
+                services.AddScoped<IMediaRepository, MediaRepository>();
+                services.AddScoped<ISessionRepository, SessionRepository>();
+                services.AddScoped<ISpotlightRepository, SpotlightRepository>();
+                services.AddScoped<ISubSessionRepository, SubSessionRepository>();
+                services.AddScoped<IUserRepository, UserRepository>();
+                services.AddScoped<IVenueRepository, VenueRepository>();
 
                 services.AddScoped<IEventService, EventService>();
-                // services.AddScoped<IEventSpotlightService, EventSpotlightService>();
-                // services.AddScoped<IEventAgendaService, EventAgendaService>();
-                // services.AddScoped<IEventMediaService, EventMediaService>();
-                // services.AddScoped<IUserService, UserService>();
-                // services.AddScoped<IEventMemberService, EventMemberService>();
-                // services.AddScoped<SeedingDataV2>();
+                services.AddScoped<IEventSpotlightService, EventSpotlightService>();
+                services.AddScoped<IEventAgendaService, EventAgendaService>();
+                services.AddScoped<IEventMediaService, EventMediaService>();
+                services.AddScoped<IUserService, UserService>();
+                services.AddScoped<IEventMemberService, EventMemberService>();
+                services.AddScoped<SeedingDataV2>();
                 services.AddScoped<AzureQueueHelpers>();
 
                 return services.BuildServiceProvider(true);

@@ -1,16 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
 
 namespace com.petronas.myevents.api.Models
 {
-    public class Media
+    public class Media : ModelBase
     {
-        [Key]
-        public string Id { get; set; }
         public string EventId { get; set; }
         public string MediaType { get; set; }
         public string Url { get; set; }
         public string ThumbUrl { get; set; }
-        public bool IsDeleted { get; set; }
-        public string Discriminator { get; set; }
+        public string FileName { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

@@ -6,6 +6,6 @@ namespace com.petronas.myevents.api.Services.Interfaces
 {
     public interface IEventSpotlightService
     {
-        IEnumerable<EventSpotlightResponse> GetSpotlights(string eventId);
+        IEnumerable<EventSpotlightResponse> GetSpotlights(string eventId, int skip, int take);
     }
 }

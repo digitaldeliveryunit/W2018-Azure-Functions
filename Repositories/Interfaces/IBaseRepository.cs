@@ -13,5 +13,6 @@ namespace com.petronas.myevents.api.Repositories.Interfaces
         IQueryable<T> GetAll(Expression<Func<T, bool>> predicate, FeedOptions feedOptions);
         IQueryable<T> GetAll(string sqlExpression, FeedOptions feedOptions);
         Task<Document> Add(T item);
+        Task<Document> Update(T item);
     }
 }

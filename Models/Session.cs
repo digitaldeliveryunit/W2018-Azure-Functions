@@ -1,19 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
 namespace com.petronas.myevents.api.Models
 {
-    public class Session
+    public class Session : ModelBase
     {
-        [Key]
-        public string Id { get; set; }
-        public Event Event { get; set; }
         public string AgendaName { get; set; }
-        public Venue Venue { get; set; }
-        public bool IsDeleted { get; set; }
         public int? Day { get; set; }
-        public List<SubSession> SubSessions { get; set; }
-        public List<EventMember> Members { get; set; }
-        public string Discriminator { get; set; }
+
+        public string EventId { get; set; }
+        public string VenueId { get; set; }
+
+        public virtual Venue Venue { get; set; }
+        public virtual List<SubSession> SubSessions { get; set; }
+        public virtual List<EventMember> Members { get; set; }
     }
 }

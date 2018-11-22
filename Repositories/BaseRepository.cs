@@ -9,21 +9,25 @@ using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Documents.Linq;
 using com.petronas.myevents.api.Repositories.Interfaces;
 using com.petronas.myevents.api.Migrations;
+using com.petronas.myevents.api.Models;
 
 namespace com.petronas.myevents.api.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
+    public class BaseRepository<T> : IBaseRepository<T> where T : ModelBase, new()
     {
         private readonly Lazy<DocumentClient> _lazyClient = new Lazy<DocumentClient>(InitializeDocumentClient);
         private DocumentClient _client => _lazyClient.Value;
         private Uri _collectionUri;
+        private string _collectionName;
+        private string _databaseName;
 
         public BaseRepository(string collectionName)
         {
-            var databaseName = Environment.GetEnvironmentVariable(AppSettings.DbName);
-            _collectionUri = UriFactory.CreateDocumentCollectionUri(databaseName, collectionName);
+            _databaseName = Environment.GetEnvironmentVariable(AppSettings.DbName);
+            _collectionName = collectionName;
+            _collectionUri = UriFactory.CreateDocumentCollectionUri(_databaseName, collectionName);
             var createDbResult = _client.CreateDatabaseIfNotExistsAsync(
-                new Database { Id = databaseName }).GetAwaiter().GetResult();
+                new Database { Id = _databaseName }).GetAwaiter().GetResult();
 
             // If database is newly created, run migrations
             if (createDbResult.StatusCode == HttpStatusCode.Created)
@@ -69,6 +73,13 @@ namespace com.petronas.myevents.api.Repositories
             var client = new DocumentClient(endpoint, authKey);
             client.OpenAsync().GetAwaiter().GetResult();
             return client;
+        }
+
+        public async Task<Document> Update(T item)
+        {
+            var documentUri = UriFactory.CreateDocumentUri(_databaseName, _collectionName, item.Id);
+            var result = await _client.ReplaceDocumentAsync(documentUri.AbsoluteUri, item);
+            return result.Resource;
         }
     }
 }

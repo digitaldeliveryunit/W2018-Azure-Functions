@@ -1,14 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace com.petronas.myevents.api.Models
+﻿namespace com.petronas.myevents.api.Models
 {
-    public class Venue
+    public class Venue : ModelBase
     {
-        [Key]
-        public string Id { get; set; }
         public string VenueName { get; set; }
-        public Location Location { get; set; }
-        public bool IsDeleted { get; set; }
-        public string Discriminator { get; set; }
+
+        public string LocationId { get; set; }
     }
 }

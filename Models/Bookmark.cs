@@ -1,15 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace com.petronas.myevents.api.Models
+﻿namespace com.petronas.myevents.api.Models
 {
-    public class Bookmark
+    public class Bookmark: ModelBase
     {
-        [Key]
-        public string Id { get; set; }
-        public User User { get; set; }
+        public string UserId { get; set; }
         public string EventId { get; set; }
-        public Event Event { get; set; }
-        public bool IsDeleted { get; set; }
-        public string Discriminator { get; set; }
     }
 }

@@ -1,16 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace com.petronas.myevents.api.Models
+﻿namespace com.petronas.myevents.api.Models
 {
-    public class EventMember
+    public class EventMember : ModelBase
     {
-        [Key]
-        public string Id { get; set; }
         public string EventMemberStatus { get; set; }
-        public Session Session { get; set; }
-        public Event Event { get; set; }
-        public User User { get; set; }
-        public bool IsDeleted { get; set; }
-        public string Discriminator { get; set; }
+
+        public string SessionId { get; set; }
+        public string EventId { get; set; }
+        public string UserId { get; set; }
     }
 }
