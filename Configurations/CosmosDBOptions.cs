@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace com.petronas.myevents.api.Services
+namespace com.petronas.myevents.api.Configurations
 {
     public class CosmosDBOptions
     {

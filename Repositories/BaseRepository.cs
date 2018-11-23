@@ -74,6 +74,13 @@ namespace com.petronas.myevents.api.Repositories
             return result.Resource;
         }
 
+        public async Task<Document> Update(T item)
+        {
+            var documentUri = UriFactory.CreateDocumentUri(_databaseName, _collectionName, item.Id);
+            var result = await _client.ReplaceDocumentAsync(documentUri, item);
+            return result.Resource;
+        }
+
         private static DocumentClient InitializeDocumentClient()
         {
             var endpoint = new Uri(Environment.GetEnvironmentVariable(AppSettings.DbEndpoint));
@@ -81,13 +88,6 @@ namespace com.petronas.myevents.api.Repositories
             var client = new DocumentClient(endpoint, authKey);
             client.OpenAsync().GetAwaiter().GetResult();
             return client;
-        }
-
-        public async Task<Document> Update(T item)
-        {
-            var documentUri = UriFactory.CreateDocumentUri(_databaseName, _collectionName, item.Id);
-            var result = await _client.ReplaceDocumentAsync(documentUri.AbsoluteUri, item);
-            return result.Resource;
         }
     }
 }

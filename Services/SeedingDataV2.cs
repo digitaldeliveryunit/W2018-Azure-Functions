@@ -7,6 +7,7 @@ using com.petronas.myevents.api.Services;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Options;
+using com.petronas.myevents.api.Configurations;
 
 namespace com.petronas.myevents.api.Services
 {

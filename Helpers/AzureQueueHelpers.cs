@@ -1,23 +1,22 @@
 ﻿using System;
+using com.petronas.myevents.api.Configurations;
 using com.petronas.myevents.api.Viewmodels;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 
-namespace com.petronas.myevents.api.Services.Helpers
+namespace com.petronas.myevents.api.Helpers
 {
     public class AzureQueueHelpers
     {
-        private readonly CloudStorageAccount _storageAccount;
-        private readonly CloudQueueClient _queueClient;
-        private readonly AzureQueueOptions _options;
         private readonly CloudQueue _queue;
+
         public AzureQueueHelpers(IOptions<AzureQueueOptions> optionsAccessor)
         {
-            _options = optionsAccessor.Value;
-            _storageAccount = CloudStorageAccount.Parse(_options.StorageConnectionString);
-             _queueClient = _storageAccount.CreateCloudQueueClient();
+            var _options = optionsAccessor.Value;
+            var _storageAccount = CloudStorageAccount.Parse(_options.StorageConnectionString);
+            var _queueClient = _storageAccount.CreateCloudQueueClient();
             _queue = _queueClient.GetQueueReference(_options.QueueName);
         }
 
