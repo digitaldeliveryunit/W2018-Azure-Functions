@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace com.petronas.myevents.api.Viewmodels
+namespace com.petronas.myevents.api.ViewModels
 {
     public class ErrorsResponse
     {

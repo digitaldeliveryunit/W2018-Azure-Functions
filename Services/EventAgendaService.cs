@@ -33,7 +33,7 @@ namespace com.petronas.myevents.api.Services
                 UserStatus = s.Members.Any(x => !x.IsDeleted && x.UserId == user.Id) ?
                                      s.Members.FirstOrDefault(x => !x.IsDeleted && x.UserId == user.Id).EventMemberStatus
                                      : UserStatus.NEW.ToString(),
-                SubAgendas = s.SubSessions.Select(ss => new Viewmodels.EventSubAgendaResponse()
+                SubAgendas = s.SubSessions.Select(ss => new ViewModels.EventSubAgendaResponse()
                 {
                     SubAgendaId = ss.Id,
                     AgendaName = ss.AgendaName,

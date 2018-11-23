@@ -8,7 +8,7 @@ using Willezone.Azure.WebJobs.Extensions.DependencyInjection;
 using com.petronas.myevents.api.Constants;
 using com.petronas.myevents.api.Services.Interfaces;
 
-namespace Petronas.Services.Social.Functions
+namespace com.petronas.myevents.api.Functions
 {
     public static class EventFunction
     {

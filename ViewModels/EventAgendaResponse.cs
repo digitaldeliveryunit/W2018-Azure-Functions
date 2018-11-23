@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using com.petronas.myevents.api.Viewmodels;
 
 namespace com.petronas.myevents.api.ViewModels
 {

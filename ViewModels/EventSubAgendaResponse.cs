@@ -1,5 +1,5 @@
 ﻿using System;
-namespace com.petronas.myevents.api.Viewmodels
+namespace com.petronas.myevents.api.ViewModels
 {
     public class EventSubAgendaResponse
     {

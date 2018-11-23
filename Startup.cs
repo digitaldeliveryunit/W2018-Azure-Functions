@@ -3,16 +3,11 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Willezone.Azure.WebJobs.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
-using Microsoft.Extensions.Configuration;
 using com.petronas.myevents.api.Repositories.Interfaces;
 using com.petronas.myevents.api.Repositories;
-using com.petronas.myevents.api.Models;
-using com.petronas.myevents.api.Constants;
 using com.petronas.myevents.api.Services.Interfaces;
 using com.petronas.myevents.api.Services;
-using com.petronas.myevents.api.Services.Helpers;
 
 [assembly: WebJobsStartup(typeof(Startup))]
 namespace com.petronas.myevents.api
@@ -52,8 +47,6 @@ namespace com.petronas.myevents.api
                 services.AddScoped<IEventMediaService, EventMediaService>();
                 services.AddScoped<IUserService, UserService>();
                 services.AddScoped<IEventMemberService, EventMemberService>();
-                services.AddScoped<SeedingDataV2>();
-                services.AddScoped<AzureQueueHelpers>();
 
                 return services.BuildServiceProvider(true);
             }
