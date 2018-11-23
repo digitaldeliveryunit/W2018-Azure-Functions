@@ -11,12 +11,10 @@ namespace com.petronas.myevents.api.Services
 {
     public class EventMemberService : IEventMemberService
     {
-        private readonly IEventMemberRepository _eventMemberRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IUserRepository _userRepository;
-        public EventMemberService(IEventMemberRepository eventMemberRepository, IEventRepository eventRepository, IUserRepository userRepository)
+        public EventMemberService(IEventRepository eventRepository, IUserRepository userRepository)
         {
-            _eventMemberRepository = eventMemberRepository;
             _eventRepository = eventRepository;
             _userRepository = userRepository;
         }
@@ -27,7 +25,7 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            return _eventMemberRepository.GetAll(x => !x.IsDeleted && x.EventId == eventid && x.UserId == userId, feedOptions).FirstOrDefault();
+            return _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventid, feedOptions).FirstOrDefault().Members.Where(x => !x.IsDeleted && x.UserId == userId).FirstOrDefault();
         }
 
         public async Task<bool> Join(string eventId, string userId)
@@ -37,7 +35,7 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            var joined = _eventMemberRepository.GetAll(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId, feedOptions).FirstOrDefault();
+            var joined = _eventRepository.GetAll(x=>!x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault().Members.Where(x => !x.IsDeleted && x.UserId == userId).FirstOrDefault();
             if (joined == null)
             {
                 var newMember = new EventMember()
@@ -50,13 +48,14 @@ namespace com.petronas.myevents.api.Services
                 };
                 var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
                 ev.Members.Add(newMember);
-                await _eventMemberRepository.Add(newMember);
-                await  _eventRepository.Update(ev);
+                await _eventRepository.Update(ev);
             }
             else
             {
-                joined.EventMemberStatus = UserStatus.JOINED.ToString();
-                await _eventMemberRepository.Update(joined);
+                var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
+                var oldMember = ev.Members.Where(x => !x.IsDeleted && x.Id == joined.Id).FirstOrDefault();
+                oldMember.EventMemberStatus = UserStatus.JOINED.ToString();
+                await _eventRepository.Update(ev);
             }
             return true;
         }
@@ -69,13 +68,11 @@ namespace com.petronas.myevents.api.Services
                 EnableCrossPartitionQuery = true
             };
 
-            var joined = _eventMemberRepository.GetAll(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId, null).ToList();
+            var joined = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, null).FirstOrDefault().Members.Where(x=>!x.IsDeleted).ToList();
             var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
             foreach (var item in joined)
             {
-                item.IsDeleted = true;
                 ev.Bookmarks.Remove(ev.Bookmarks.FirstOrDefault(x => x.Id == item.Id));
-                await _eventMemberRepository.Update(item);
             }
             await _eventRepository.Update(ev);
             return true;

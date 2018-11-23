@@ -4,20 +4,26 @@ using System.Linq;
 using com.petronas.myevents.api.Repositories.Interfaces;
 using com.petronas.myevents.api.Services.Interfaces;
 using com.petronas.myevents.api.ViewModels;
+using Microsoft.Azure.Documents.Client;
 
 namespace com.petronas.myevents.api.Services
 {
     public class EventSpotlightService : IEventSpotlightService
     {
-        private readonly ISpotlightRepository _spotlightRepository;
+        private readonly IEventRepository _eventRepository;
 
-        public EventSpotlightService(ISpotlightRepository spotlightRepository)
+        public EventSpotlightService(IEventRepository eventRepository)
         {
-            _spotlightRepository = spotlightRepository;
+            _eventRepository = eventRepository;
         }
         public IEnumerable<EventSpotlightResponse> GetSpotlights(string eventId, int skip, int take)
         {
-            var spotlightList = _spotlightRepository.GetAll(x => !x.IsDeleted && x.EventId == eventId, null).Skip(skip).Take(take);
+            var feedOptions = new FeedOptions
+            {
+                MaxItemCount = 1,
+                EnableCrossPartitionQuery = true
+            };
+            var spotlightList = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault().Spotlights.Where(x=>!x.IsDeleted).Skip(skip).Take(take).ToList();
 
             if (spotlightList.Any())
             {

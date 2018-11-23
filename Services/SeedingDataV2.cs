@@ -697,7 +697,7 @@ namespace com.petronas.myevents.api.Services
 
             foreach (var item in Events)
             {
-                SeedingHelpers.GetSpotlights(Spotlights, item.Id);
+                SeedingHelpers.GetSpotlights(item.Spotlights, item);
             }
 
             #endregion
@@ -707,7 +707,7 @@ namespace com.petronas.myevents.api.Services
 
             foreach (var item in Events)
             {
-                SeedingHelpers.GetMedias(Medias, item.Id);
+                SeedingHelpers.GetMedias(item.Medias, item);
             }
 
             #endregion
@@ -764,41 +764,41 @@ namespace com.petronas.myevents.api.Services
                 }
             }
 
-            if (!CheckExist(CollectionNameConstant.COLLECTION_BOOKMARK))
-            {
+            //if (!CheckExist(CollectionNameConstant.COLLECTION_BOOKMARK))
+            //{
 
-                foreach (var item in Bookmarks)
-                {
-                    _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_BOOKMARK), item).Wait();
-                }
-            }
+            //    foreach (var item in Bookmarks)
+            //    {
+            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_BOOKMARK), item).Wait();
+            //    }
+            //}
 
-            if (!CheckExist(CollectionNameConstant.COLLECTION_EVENT_MEMBER))
-            {
+            //if (!CheckExist(CollectionNameConstant.COLLECTION_EVENT_MEMBER))
+            //{
 
-                foreach (var item in Members)
-                {
-                    _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_EVENT_MEMBER), item).Wait();
-                }
-            }
+            //    foreach (var item in Members)
+            //    {
+            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_EVENT_MEMBER), item).Wait();
+            //    }
+            //}
 
-            if (!CheckExist(CollectionNameConstant.COLLECTION_SPOTLIGHT))
-            {
+            //if (!CheckExist(CollectionNameConstant.COLLECTION_SPOTLIGHT))
+            //{
 
-                foreach (var item in Spotlights)
-                {
-                    _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_SPOTLIGHT), item).Wait();
-                }
-            }
+            //    foreach (var item in Spotlights)
+            //    {
+            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_SPOTLIGHT), item).Wait();
+            //    }
+            //}
 
-            if (!CheckExist(CollectionNameConstant.COLLECTION_MEDIA))
-            {
+            //if (!CheckExist(CollectionNameConstant.COLLECTION_MEDIA))
+            //{
 
-                foreach (var item in Medias)
-                {
-                    _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_MEDIA), item).Wait();
-                }
-            }
+            //    foreach (var item in Medias)
+            //    {
+            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_MEDIA), item).Wait();
+            //    }
+            //}
             #endregion
 
 
@@ -811,31 +811,32 @@ namespace com.petronas.myevents.api.Services
 
     public static class SeedingHelpers
     {
-        public static void GetSpotlights(List<Spotlight> list, string eventId)
+        public static void GetSpotlights(List<Spotlight> list, Event _event)
         {
-            list.Add(new Spotlight() { EventId = eventId, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Lewis Hamilton", SpotlightDescription = "F1 Driver", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/ddb20aa4-4d29-4a43-8c05-fb174d8d9eb6-1-440px-lewis-hamilton-2016-malaysia-2.jpg" });
-            list.Add(new Spotlight() { EventId = eventId, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Kimi Räikkönen", SpotlightDescription = "F1 Driver", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/349630b9-2ebd-4b18-b5f8-5628c2f2f704-1-rai-at-2017-russian-grand-prix-podium-cropped.jpg" });
-            list.Add(new Spotlight() { EventId = eventId, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Fernando Alonso", SpotlightDescription = "F1 Driver", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/a16b6151-ce40-4a40-962b-e6061ecea52e-1-alonso-2016.jpg" });
-            list.Add(new Spotlight() { EventId = eventId, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Celine Dion", SpotlightDescription = "Singer", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/453a74fa-581a-4fb7-93e1-75a7a4cb0bad-1-440px-celine-dion-live-2017.jpg" });
-            list.Add(new Spotlight() { EventId = eventId, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Il Divo", SpotlightDescription = "Band", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/7a16367f-6bd5-40e8-8fcb-4aef031e1396-1-440px-il-divo-inhk.JPG" });
-            list.Add(new Spotlight() { EventId = eventId, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Natalie Portman", SpotlightDescription = "Actress", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/bfdc1ebb-f229-454a-ad9d-ac0b778bb0b0-1-440px-natalie-portman-cannes-2015-5-cropped.jpg" });
-            list.Add(new Spotlight() { EventId = eventId, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Emma Watson", SpotlightDescription = "Actress", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/694c6e85-35e4-4ea5-8349-a14b60515fed-1-440px-emma-watson-2013.jpg" });
-            list.Add(new Spotlight() { EventId = eventId, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Bill Gates", SpotlightDescription = "Microsoft CEO", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/2b71b121-ff49-4851-b996-14b3f9e11842-1-440px-bill-gates-2018.jpg" });
-            list.Add(new Spotlight() { EventId = eventId, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Warren Buffett", SpotlightDescription = "Berkshire Hathaway CEO", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/b09f08b8-6aed-47d7-8365-f509a7525799-1-440px-warren-buffett-ku-visit.jpg" });
-            list.Add(new Spotlight() { EventId = eventId, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Larry Page", SpotlightDescription = "Google CEO", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/e0c48375-1e5f-4c56-9e3f-bd5c111afa75-1-440px-larry-page-in-the-european-parliament-1.jpg" });
+            list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Lewis Hamilton", SpotlightDescription = "F1 Driver", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/ddb20aa4-4d29-4a43-8c05-fb174d8d9eb6-1-440px-lewis-hamilton-2016-malaysia-2.jpg" });
+            list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Kimi Räikkönen", SpotlightDescription = "F1 Driver", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/349630b9-2ebd-4b18-b5f8-5628c2f2f704-1-rai-at-2017-russian-grand-prix-podium-cropped.jpg" });
+            list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Fernando Alonso", SpotlightDescription = "F1 Driver", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/a16b6151-ce40-4a40-962b-e6061ecea52e-1-alonso-2016.jpg" });
+            list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Celine Dion", SpotlightDescription = "Singer", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/453a74fa-581a-4fb7-93e1-75a7a4cb0bad-1-440px-celine-dion-live-2017.jpg" });
+            list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Il Divo", SpotlightDescription = "Band", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/7a16367f-6bd5-40e8-8fcb-4aef031e1396-1-440px-il-divo-inhk.JPG" });
+            list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Natalie Portman", SpotlightDescription = "Actress", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/bfdc1ebb-f229-454a-ad9d-ac0b778bb0b0-1-440px-natalie-portman-cannes-2015-5-cropped.jpg" });
+            list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Emma Watson", SpotlightDescription = "Actress", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/694c6e85-35e4-4ea5-8349-a14b60515fed-1-440px-emma-watson-2013.jpg" });
+            list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Bill Gates", SpotlightDescription = "Microsoft CEO", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/2b71b121-ff49-4851-b996-14b3f9e11842-1-440px-bill-gates-2018.jpg" });
+            list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Warren Buffett", SpotlightDescription = "Berkshire Hathaway CEO", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/b09f08b8-6aed-47d7-8365-f509a7525799-1-440px-warren-buffett-ku-visit.jpg" });
+            list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Larry Page", SpotlightDescription = "Google CEO", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/e0c48375-1e5f-4c56-9e3f-bd5c111afa75-1-440px-larry-page-in-the-european-parliament-1.jpg" });
+
         }
-        public static void GetMedias(List<Media> list, string eventId)
+        public static void GetMedias(List<Media> list, Event _event)
         {
-            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Cartoon 1.mp4", EventId = eventId, MediaType = "Video", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/stream/video/6af05ae2-58b7-4653-9bb6-7b0ae4f2316b-25-an-private-event-1-20180425092949874-b9bb9-web-compressed.mp4", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/6af05ae2-58b7-4653-9bb6-7b0ae4f2316b-25-an-private-event-1-20180425092949874-b9bb9-thumbnail.jpg" });
-            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Introduction.mp4", EventId = eventId, MediaType = "Video", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/stream/video/74fa0d89-0b37-4c58-baaf-a0c7910686bd-25-an-private-event-1-20180425092958046-downl-web-compressed.mp4", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/74fa0d89-0b37-4c58-baaf-a0c7910686bd-25-an-private-event-1-20180425092958046-downl-thumbnail.jpg" });
+            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Cartoon 1.mp4", EventId = _event.Id, MediaType = "Video", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/stream/video/6af05ae2-58b7-4653-9bb6-7b0ae4f2316b-25-an-private-event-1-20180425092949874-b9bb9-web-compressed.mp4", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/6af05ae2-58b7-4653-9bb6-7b0ae4f2316b-25-an-private-event-1-20180425092949874-b9bb9-thumbnail.jpg" });
+            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Introduction.mp4", EventId = _event.Id, MediaType = "Video", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/stream/video/74fa0d89-0b37-4c58-baaf-a0c7910686bd-25-an-private-event-1-20180425092958046-downl-web-compressed.mp4", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/74fa0d89-0b37-4c58-baaf-a0c7910686bd-25-an-private-event-1-20180425092958046-downl-thumbnail.jpg" });
 
-            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Quote.jog", EventId = eventId, MediaType = "Image", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/view/image/28714d53-3ff4-491f-ba91-1e117391404c-25-an-private-event-1-20180425092942889-15655.jpg", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/28714d53-3ff4-491f-ba91-1e117391404c-25-an-private-event-1-20180425092942889-15655-thumbnail.jpg" });
-            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "F1 Warmup 1.jpg", EventId = eventId, MediaType = "Image", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/view/image/9bc41d89-9028-434c-9151-2660b902fbee-25-an-private-event-1-20180425092942968-30708.jpg", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/9bc41d89-9028-434c-9151-2660b902fbee-25-an-private-event-1-20180425092942968-30708-thumbnail.jpg" });
-            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "F1 Warmup 2.jpg", EventId = eventId, MediaType = "Image", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/view/image/2b48c648-5473-4bc5-82c5-fbd650b9b16e-25-an-private-event-1-20180425092944202-image.jpg", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/2b48c648-5473-4bc5-82c5-fbd650b9b16e-25-an-private-event-1-20180425092944202-image-thumbnail.jpg" });
+            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Quote.jog", EventId = _event.Id, MediaType = "Image", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/view/image/28714d53-3ff4-491f-ba91-1e117391404c-25-an-private-event-1-20180425092942889-15655.jpg", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/28714d53-3ff4-491f-ba91-1e117391404c-25-an-private-event-1-20180425092942889-15655-thumbnail.jpg" });
+            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "F1 Warmup 1.jpg", EventId = _event.Id, MediaType = "Image", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/view/image/9bc41d89-9028-434c-9151-2660b902fbee-25-an-private-event-1-20180425092942968-30708.jpg", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/9bc41d89-9028-434c-9151-2660b902fbee-25-an-private-event-1-20180425092942968-30708-thumbnail.jpg" });
+            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "F1 Warmup 2.jpg", EventId = _event.Id, MediaType = "Image", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/view/image/2b48c648-5473-4bc5-82c5-fbd650b9b16e-25-an-private-event-1-20180425092944202-image.jpg", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/2b48c648-5473-4bc5-82c5-fbd650b9b16e-25-an-private-event-1-20180425092944202-image-thumbnail.jpg" });
 
-            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Race.xlsx", EventId = eventId, MediaType = "Document", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/get/file/a7e2ab8b-3673-456e-8101-5b7622ddce42-25-an-private-event-1-20180830034858258-xlsx-.xlsx", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/xls.png" });
-            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Sepang map 1.pdf", EventId = eventId, MediaType = "Document", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/get/file/a7f16f0b-de84-4f72-bf84-4fc97d7d20d4-25-an-private-event-1-20180425093539437-pathw.pdf", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/pdf.png" });
-            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Sepang map 2.pdf", EventId = eventId, MediaType = "Document", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/get/file/e813b0ad-4c91-426c-ac42-d1c6e5063b30-25-an-private-event-1-20180425093529062-opm13.pdf", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/pdf.png" });
+            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Race.xlsx", EventId = _event.Id, MediaType = "Document", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/get/file/a7e2ab8b-3673-456e-8101-5b7622ddce42-25-an-private-event-1-20180830034858258-xlsx-.xlsx", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/xls.png" });
+            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Sepang map 1.pdf", EventId = _event.Id, MediaType = "Document", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/get/file/a7f16f0b-de84-4f72-bf84-4fc97d7d20d4-25-an-private-event-1-20180425093539437-pathw.pdf", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/pdf.png" });
+            list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Sepang map 2.pdf", EventId = _event.Id, MediaType = "Document", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/get/file/e813b0ad-4c91-426c-ac42-d1c6e5063b30-25-an-private-event-1-20180425093529062-opm13.pdf", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/pdf.png" });
         }
 
 
