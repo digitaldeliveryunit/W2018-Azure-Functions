@@ -15,12 +15,10 @@ namespace com.petronas.myevents.api.Services
     {
         private readonly IEventRepository _eventRepository;
         private readonly IUserService _userService;
-        private readonly IBookmarkRepository _bookmarkRepository;
-        public EventService(IEventRepository eventRepository, IUserService userService, IBookmarkRepository bookmarkRepository)
+        public EventService(IEventRepository eventRepository, IUserService userService)
         {
             _eventRepository = eventRepository;
             _userService = userService;
-            _bookmarkRepository = bookmarkRepository;
         }
 
         public async Task<bool> Bookmark(string eventId, string userId)
@@ -31,7 +29,7 @@ namespace com.petronas.myevents.api.Services
                 EnableCrossPartitionQuery = true
             };
 
-            var isBookmark = _bookmarkRepository.GetAll(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId, null).Any();
+            var isBookmark = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault().Bookmarks.Any(x => !x.IsDeleted && x.UserId == userId);
             if (!isBookmark)
             {
                 var bookmark = new Bookmark()
@@ -43,7 +41,6 @@ namespace com.petronas.myevents.api.Services
                 };
                 var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
                 ev.Bookmarks.Add(bookmark);
-                await _bookmarkRepository.Add(bookmark);
                 await _eventRepository.Update(ev);
             }
             return true;
@@ -57,13 +54,11 @@ namespace com.petronas.myevents.api.Services
                 EnableCrossPartitionQuery = true
             };
 
-            var bookmarks = _bookmarkRepository.GetAll(x => !x.IsDeleted && x.EventId == eventId && x.UserId == userId, null).ToList();
+            var bookmarks = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault().Bookmarks.Where(x => !x.IsDeleted && x.UserId == userId).ToList();
             var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
             foreach (var item in bookmarks)
             {
-                item.IsDeleted = true;
                 ev.Bookmarks.Remove(ev.Bookmarks.FirstOrDefault(x => x.Id == item.Id));
-                await _bookmarkRepository.Update(item);
             }
             await _eventRepository.Update(ev);
             return true;

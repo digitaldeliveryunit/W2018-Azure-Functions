@@ -22,6 +22,8 @@ namespace com.petronas.myevents.api.Models
         public Venue Venue { get; set; }
         public Location Location { get; set; }
         public List<Bookmark> Bookmarks { get; set; }
+        public List<Media> Medias { get; set; }
+        public List<Spotlight> Spotlights { get; set; }
         public List<EventMember> Members { get; set; }
     }
 }

@@ -40,12 +40,8 @@ namespace com.petronas.myevents.api
                 var services = new ServiceCollection();
 
                 services.AddScoped<IEventRepository, EventRepository>();
-                services.AddScoped<IBookmarkRepository, BookmarkRepository>();
-                services.AddScoped<IEventMemberRepository, EventMemberRepository>();
                 services.AddScoped<ILocationRepository, LocationRepository>();
-                services.AddScoped<IMediaRepository, MediaRepository>();
                 services.AddScoped<ISessionRepository, SessionRepository>();
-                services.AddScoped<ISpotlightRepository, SpotlightRepository>();
                 services.AddScoped<ISubSessionRepository, SubSessionRepository>();
                 services.AddScoped<IUserRepository, UserRepository>();
                 services.AddScoped<IVenueRepository, VenueRepository>();

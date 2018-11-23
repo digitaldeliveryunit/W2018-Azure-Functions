@@ -10,15 +10,20 @@ namespace com.petronas.myevents.api.Services
 {
     public class EventMediaService : IEventMediaService
     {
-        private readonly IMediaRepository _mediaRepository;
-        public EventMediaService(IMediaRepository mediaRepository)
+        private readonly IEventRepository _eventRepository;
+        public EventMediaService(IEventRepository eventRepository)
         {
-            _mediaRepository = mediaRepository;
+            _eventRepository = eventRepository;
         }
 
         public IEnumerable<Media> GetMedias(string eventId, string mediaType, int skip, int take)
         {
-            return _mediaRepository.GetAll(x => !x.IsDeleted && x.EventId == eventId && x.MediaType == mediaType, null).Skip(skip).Take(take).ToList();
+            var feedOptions = new FeedOptions
+            {
+                MaxItemCount = 1,
+                EnableCrossPartitionQuery = true
+            };
+            return _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault().Medias.Where(x=>!x.IsDeleted && x.MediaType == mediaType).Skip(skip).Take(take).ToList();
         }
     }
 }
