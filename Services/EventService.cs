@@ -37,7 +37,7 @@ namespace com.petronas.myevents.api.Services
                     EventId = eventId,
                     UserId = userId,
                     Id = Guid.NewGuid().ToString(),
-                    Discriminator = CollectionNameConstant.MODEL_BOOKMARK
+                    //Discriminator = CollectionNameConstant.MODEL_BOOKMARK
                 };
                 var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
                 ev.Bookmarks.Add(bookmark);
@@ -77,13 +77,48 @@ namespace com.petronas.myevents.api.Services
             return ev == null ? null : GetEventResponse(ev);
         }
 
-        public IEnumerable<EventResponse> GetFeaturedEvents(int skip, int take)
+        public EventListViewModel GetFeaturedEvents(string skip, int take, string searchKey, string userId)
         {
-            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.IsFeatured, null).Skip(skip).Take(take).OrderBy(x => x.EventDateTo).ToList();
-            foreach (var e in ev)
+            var feedOptions = new FeedOptions
             {
-                yield return GetEventResponse(e);
+                MaxItemCount = take,
+                EnableScanInQuery = true
+            };
+            if(!string.IsNullOrEmpty(skip)){
+                feedOptions.RequestContinuation = skip;
             }
+            var continuation = string.Empty;
+            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && (string.IsNullOrEmpty(searchKey) || x.EventName.Contains(searchKey)), feedOptions, out continuation, x=>x.OrderBy(y=>y.EventDateTo))
+                .Select(_event => new EventResponse()
+            {
+                EventId = _event.Id,
+                ImageUrl = _event.EventImageUrl,
+                EventDescription = _event.EventDescription,
+                EventStatus = _event.EventStatus,
+                EventName = _event.EventName,
+                EventLocation = _event.Location,
+                EventType = _event.EventType,
+                DateTo = _event.EventDateTo,
+                DateFrom = _event.EventDateFrom,
+                Venue = _event.Venue.VenueName,
+                IsFeatured = _event.IsFeatured,
+                SurveyUrl = _event.SurveyUrl,
+                SurveyResultUrl = _event.SurveyResultUrl,
+                IsBookmark = _event.Bookmarks != null && _event.Bookmarks.Any(x => !x.IsDeleted && x.UserId == userId),
+                UserStatus = _event.Members != null && _event.Members.Any(x => !x.IsDeleted && x.UserId == userId) ?
+                                   _event.Members.FirstOrDefault(x => !x.IsDeleted && x.UserId == userId).EventMemberStatus
+                                   : UserStatus.NEW.ToString()
+            }).ToList();
+            // var lst = new List<EventResponse>();
+            // foreach(var item in ev){
+            //     lst.Add(GetEventResponse(item));
+            // }
+            return new EventListViewModel(){
+                Events = ev,
+                ContinuationKey = continuation,
+                Take = take,
+                HasNextPage = !string.IsNullOrEmpty(continuation)
+            };
         }
 
         public IEnumerable<EventResponse> GetPastEvents(int skip, int take)
@@ -98,11 +133,25 @@ namespace com.petronas.myevents.api.Services
 
         public IEnumerable<EventResponse> GetUpcomingAllEvents(int skip, int take)
         {
-            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.EventDateTo > DateTime.UtcNow, null).Skip(skip).Take(take).OrderBy(x => x.EventDateTo).ToList();
-            foreach (var e in ev)
-            {
-                yield return GetEventResponse(e);
-            }
+            var feedOptions = new FeedOptions(){
+                EnableCrossPartitionQuery = true,
+                MaxItemCount = take
+            };
+            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.EventDateTo > DateTime.UtcNow, feedOptions)
+                
+                .Select(x => new EventResponse(){
+                    EventId = x.Id,
+                    DateFrom = x.EventDateFrom,
+                    DateTo = x.EventDateTo,
+                    EventDescription = x.EventDescription,
+                    EventLocation = x.Location,
+                    EventName = x.EventName
+                }).ToList();
+            // foreach (var e in ev)
+            // {
+            //     yield return GetEventResponse(e);
+            // }
+            return ev;
         }
 
         public IEnumerable<EventResponse> GetUpcomingEvents(int skip, int take)
@@ -137,8 +186,8 @@ namespace com.petronas.myevents.api.Services
                 IsFeatured = _event.IsFeatured,
                 SurveyUrl = _event.SurveyUrl,
                 SurveyResultUrl = _event.SurveyResultUrl,
-                IsBookmark = _event.Bookmarks.Any(x => !x.IsDeleted && x.UserId == user.Id),
-                UserStatus = _event.Members.Any(x => !x.IsDeleted && x.UserId == user.Id) ?
+                IsBookmark = _event.Bookmarks != null && _event.Bookmarks.Any(x => !x.IsDeleted && x.UserId == user.Id),
+                UserStatus = _event.Members != null && _event.Members.Any(x => !x.IsDeleted && x.UserId == user.Id) ?
                                    _event.Members.FirstOrDefault(x => !x.IsDeleted && x.UserId == user.Id).EventMemberStatus
                                    : UserStatus.NEW.ToString()
             };

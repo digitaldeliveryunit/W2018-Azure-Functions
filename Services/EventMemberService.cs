@@ -41,7 +41,7 @@ namespace com.petronas.myevents.api.Services
                 var newMember = new EventMember()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Discriminator = CollectionNameConstant.MODEL_EVENT_MEMBER,
+                    //Discriminator = CollectionNameConstant.MODEL_EVENT_MEMBER,
                     EventMemberStatus = UserStatus.JOINED.ToString(),
                     UserId = userId,
                     EventId = eventId

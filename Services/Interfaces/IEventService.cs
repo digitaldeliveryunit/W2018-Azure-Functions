@@ -12,7 +12,7 @@ namespace com.petronas.myevents.api.Services.Interfaces
         EventResponse GetById(string id);
         IEnumerable<EventResponse> GetUpcomingAllEvents(int skip, int take);
         IEnumerable<EventResponse> GetUpcomingEvents(int skip, int take);
-        IEnumerable<EventResponse> GetFeaturedEvents(int skip, int take);
+        EventListViewModel GetFeaturedEvents(string continuationKey, int take, string searchKey, string userId);
         IEnumerable<EventResponse> GetPastEvents(int skip, int take);
         Task<bool> UnBookmark(string eventId, string userId);
         Task<bool> Bookmark(string eventId, string userId);

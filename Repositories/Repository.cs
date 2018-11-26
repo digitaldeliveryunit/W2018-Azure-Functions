@@ -6,26 +6,26 @@ namespace com.petronas.myevents.api.Repositories
 {
     public class EventRepository : BaseRepository<Event>, IEventRepository
     {
-        public EventRepository() : base(CollectionNames.COLLECTION_EVENT) { }
+        public EventRepository() : base(CollectionNameConstant.COLLECTION_EVENT) { }
     }
     public class LocationRepository : BaseRepository<Location>, ILocationRepository
     {
-        public LocationRepository() : base(CollectionNames.COLLECTION_LOCATION) { }
+        public LocationRepository() : base(CollectionNameConstant.COLLECTION_LOCATION) { }
     }
     public class SessionRepository : BaseRepository<Session>, ISessionRepository
     {
-        public SessionRepository() : base(CollectionNames.COLLECTION_SESSION) { }
+        public SessionRepository() : base(CollectionNameConstant.COLLECTION_SESSION) { }
     }
     public class SubSessionRepository : BaseRepository<SubSession>, ISubSessionRepository
     {
-        public SubSessionRepository() : base(CollectionNames.COLLECTION_SUBSESSION) { }
+        public SubSessionRepository() : base(CollectionNameConstant.COLLECTION_SUBSESSION) { }
     }
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public UserRepository() : base(CollectionNames.COLLECTION_USER) { }
+        public UserRepository() : base(CollectionNameConstant.COLLECTION_USER) { }
     }
     public class VenueRepository : BaseRepository<Venue>, IVenueRepository
     {
-        public VenueRepository() : base(CollectionNames.COLLECTION_VENUE) { }
+        public VenueRepository() : base(CollectionNameConstant.COLLECTION_VENUE) { }
     }
 }

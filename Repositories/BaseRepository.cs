@@ -10,6 +10,8 @@ using Microsoft.Azure.Documents.Linq;
 using com.petronas.myevents.api.Repositories.Interfaces;
 using com.petronas.myevents.api.Migrations;
 using com.petronas.myevents.api.Models;
+using com.petronas.myevents.api.Services;
+using System.Collections.Generic;
 
 namespace com.petronas.myevents.api.Repositories
 {
@@ -26,15 +28,15 @@ namespace com.petronas.myevents.api.Repositories
             _databaseName = Environment.GetEnvironmentVariable(AppSettings.DbName);
             _collectionName = collectionName;
             _collectionUri = UriFactory.CreateDocumentCollectionUri(_databaseName, collectionName);
-            var createDbResult = _client.CreateDatabaseIfNotExistsAsync(
-                new Database { Id = _databaseName }).GetAwaiter().GetResult();
+            // var createDbResult = _client.CreateDatabaseIfNotExistsAsync(
+            //     new Database { Id = _databaseName }).GetAwaiter().GetResult();
 
-            // If database is newly created, run migrations
-            if (createDbResult.StatusCode == HttpStatusCode.Created)
-            {
-                MigrateCollection.Run(_client);
-                MigrateMasterData.Run(_client);
-            }
+            // // If database is newly created, run migrations
+            // if (createDbResult.StatusCode == HttpStatusCode.Created)
+            // {
+            //     MigrateCollection.Run(_client);
+            //     MigrateMasterData.Run(_client);
+            // }
         }
 
         public IQueryable<T> GetAll()
@@ -60,6 +62,26 @@ namespace com.petronas.myevents.api.Repositories
             }
             var result = _client.CreateDocumentQuery<T>(_collectionUri, feedOptions).Where(predicate);
             return result;
+        }
+
+        public IEnumerable<T> GetBatch(Expression<Func<T, bool>> predicate, FeedOptions feedOptions, out string continuationKey, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
+        {
+            if(feedOptions== null)
+            {
+                feedOptions = new FeedOptions
+                {
+                    MaxItemCount = -1,
+                    EnableCrossPartitionQuery = true,
+                    EnableScanInQuery = true
+                };
+            }
+            var result = _client.CreateDocumentQuery<T>(_collectionUri, feedOptions).Where(predicate);
+            if(orderBy != null){
+                result = orderBy(result);
+            }
+            var r = result.AsDocumentQuery().ExecuteNextAsync<T>().GetAwaiter().GetResult();
+            continuationKey = r.ResponseContinuation;
+            return result.AsEnumerable();
         }
 
         public IQueryable<T> GetAll(string sqlExpression, FeedOptions feedOptions)

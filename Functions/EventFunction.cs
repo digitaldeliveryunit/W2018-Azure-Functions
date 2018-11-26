@@ -7,21 +7,21 @@ using Microsoft.Extensions.Logging;
 using Willezone.Azure.WebJobs.Extensions.DependencyInjection;
 using com.petronas.myevents.api.Constants;
 using com.petronas.myevents.api.Services.Interfaces;
+using Microsoft.Extensions.Options;
+using com.petronas.myevents.api.Configurations;
+using com.petronas.myevents.api.RequestContracts;
 
 namespace com.petronas.myevents.api.Functions
 {
     public static class EventFunction
     {
-        [FunctionName("EventFunction")]
+        [FunctionName("EventListingFunction")]
         public static IActionResult Run(
             [HttpTrigger(
                 AuthorizationLevel.Anonymous,
                 RequestMethods.Get,
-                RequestMethods.Post,
-                RequestMethods.Put,
-                RequestMethods.Delete,
-                Route = "event/{*eventType}")]HttpRequest request,
-            string eventType,
+                Route = "event/listing/{*listType}")]HttpRequest request,
+                string listType,
             ILogger log,
             [Inject]IEventService eventService)
         {
@@ -30,7 +30,23 @@ namespace com.petronas.myevents.api.Functions
                 switch (request.Method)
                 {
                     case RequestMethods.Get:
-                        return new OkObjectResult(eventService.GetUpcomingAllEvents(0, 10));
+                        var query = new RouteRequest(){
+                            SearchKey = request.Query["searchKey"],
+                            ContinuationKey = request.Query["continuationKey"],
+                            Take = !string.IsNullOrEmpty(request.Query["Take"].ToString()) ? int.Parse(request.Query["Take"]) : DefaultValue.Take
+                        };
+                        switch(listType){
+                            case QueryConstants.EVENT_FEATURED: 
+                                return new OkObjectResult(eventService.GetFeaturedEvents(string.Empty, query.Take, query.SearchKey, DefaultValue.UserId));
+                            case QueryConstants.EVENT_UPCOMING: 
+                                return new OkObjectResult(eventService.GetUpcomingEvents(0, 10));
+                            case QueryConstants.EVENT_UPCOMING_ALL: 
+                                return new OkObjectResult(eventService.GetUpcomingAllEvents(0, 10));
+                            case QueryConstants.EVENT_PAST: 
+                                return new OkObjectResult(eventService.GetPastEvents(0, 10));
+                            default: return new BadRequestResult();
+                        }
+                        //return new OkObjectResult(eventService.GetUpcomingAllEvents(0, 10));
                     case RequestMethods.Post:
                         return new OkResult();
                     case RequestMethods.Put:
