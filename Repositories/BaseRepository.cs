@@ -64,7 +64,7 @@ namespace com.petronas.myevents.api.Repositories
             return result;
         }
 
-        public IEnumerable<T> GetBatch(Expression<Func<T, bool>> predicate, FeedOptions feedOptions, out string continuationKey, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy)
+        public IEnumerable<T> GetBatch(Expression<Func<T, bool>> predicate, FeedOptions feedOptions, out string continuationKey, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
         {
             if(feedOptions== null)
             {
