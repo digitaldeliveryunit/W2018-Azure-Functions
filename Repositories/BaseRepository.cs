@@ -75,13 +75,16 @@ namespace com.petronas.myevents.api.Repositories
                     EnableScanInQuery = true
                 };
             }
+            else {
+                feedOptions.EnableScanInQuery = true;
+            }
             var result = _client.CreateDocumentQuery<T>(_collectionUri, feedOptions).Where(predicate);
             if(orderBy != null){
                 result = orderBy(result);
             }
             var r = result.AsDocumentQuery().ExecuteNextAsync<T>().GetAwaiter().GetResult();
             continuationKey = r.ResponseContinuation;
-            return result.AsEnumerable();
+            return r.AsEnumerable();
         }
 
         public IQueryable<T> GetAll(string sqlExpression, FeedOptions feedOptions)
