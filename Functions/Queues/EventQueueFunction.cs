@@ -16,14 +16,15 @@ namespace com.petronas.myevents.api.Functions.Queues
         public static async Task Run(
             [QueueTrigger(
                 "myeventsworkshopqueue",
-                Connection = AppSettings.StorageConnectionString)]string queueMessage,
+                Connection = AppSettings.StorageConnectionString)]
+            string queueMessage,
             ILogger log,
-            [Inject]IEventService eventService, [Inject]IEventMemberService memberService)
+            [Inject] IEventService eventService, [Inject] IEventMemberService memberService)
         {
-            var message = JsonConvert.DeserializeObject<QueueMessage>(queueMessage);
-            var queueType = Enum.Parse(typeof(QueueType), message.QueueType);
-            if (message != null)
+            try
             {
+                var message = JsonConvert.DeserializeObject<QueueMessage>(queueMessage);
+                var queueType = Enum.Parse(typeof(QueueType), message.QueueType);
                 switch (queueType)
                 {
                     case QueueType.BOOKMARK:
@@ -40,9 +41,10 @@ namespace com.petronas.myevents.api.Functions.Queues
                         break;
                 }
             }
-            else
+            catch (Exception e)
             {
-                log.LogError($"The message cannot be parsed");
+                log.LogError(e,e.Message);
+                throw;
             }
         }
     }

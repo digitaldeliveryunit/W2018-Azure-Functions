@@ -821,41 +821,7 @@ namespace com.petronas.myevents.api.Migrations
                 }
             }
 
-            //if (!CheckExist(CollectionNameConstant.COLLECTION_BOOKMARK))
-            //{
-
-            //    foreach (var item in Bookmarks)
-            //    {
-            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_BOOKMARK), item).Wait();
-            //    }
-            //}
-
-            //if (!CheckExist(CollectionNameConstant.COLLECTION_EVENT_MEMBER))
-            //{
-
-            //    foreach (var item in Members)
-            //    {
-            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_EVENT_MEMBER), item).Wait();
-            //    }
-            //}
-
-            //if (!CheckExist(CollectionNameConstant.COLLECTION_SPOTLIGHT))
-            //{
-
-            //    foreach (var item in Spotlights)
-            //    {
-            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_SPOTLIGHT), item).Wait();
-            //    }
-            //}
-
-            //if (!CheckExist(CollectionNameConstant.COLLECTION_MEDIA))
-            //{
-
-            //    foreach (var item in Medias)
-            //    {
-            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_MEDIA), item).Wait();
-            //    }
-            //}
+            
             #endregion
 
 

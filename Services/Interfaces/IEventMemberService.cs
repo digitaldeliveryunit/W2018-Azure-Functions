@@ -7,6 +7,6 @@ namespace com.petronas.myevents.api.Services.Interfaces
     {
         Task<bool> Join(string eventId, string userId);
         Task<bool> UnJoin(string eventId, string userId);
-        EventMember CheckExistence(string eventid, string userId);
+        EventMember CheckExistence(string eventId, string userId);
     }
 }

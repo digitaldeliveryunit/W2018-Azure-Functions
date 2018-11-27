@@ -37,8 +37,7 @@ namespace com.petronas.myevents.api.Functions
             catch (Exception ex)
             {
                 log.LogError(ex.Message, ex);
-                ErrorMessage error;
-                error = new ErrorMessage
+                var error = new ErrorMessage
                 {
                     Code = Convert.ToInt32(ErrorMessageCodes.GetUserProfileError),
                     Message = ErrorMessageCodes.GetUserProfileMessage

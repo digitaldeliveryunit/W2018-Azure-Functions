@@ -412,7 +412,7 @@
 
         internal static readonly string GetPastEventsMessage = "";
 
-        //internal static readonly DateTime PostEventJoinError;
+        internal static readonly string PostEventJoinError = "";
         internal static string GetFeaturedEventsMessage = "";
 
         public static int GetFeaturedEventsError { get; internal set; }

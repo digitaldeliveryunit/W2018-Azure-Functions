@@ -6,14 +6,13 @@ namespace com.petronas.myevents.api.Models
 {
     public class ModelBase
     {
-        public ModelBase() : base()
+        public ModelBase()
         {
             Id = Guid.NewGuid().ToString();
         }
 
-        [Key]
-        [JsonProperty("id")]
-        public string Id { get; set; }
+        [Key] [JsonProperty("id")] public string Id { get; set; }
+
         public bool IsDeleted { get; set; }
         public string Discriminator { get; set; }
     }

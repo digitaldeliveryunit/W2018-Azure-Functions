@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using com.petronas.myevents.api.Constants;
+using com.petronas.myevents.api.Helpers;
 using com.petronas.myevents.api.Models;
 using com.petronas.myevents.api.Repositories.Interfaces;
 using com.petronas.myevents.api.Services.Interfaces;
 using com.petronas.myevents.api.ViewModels;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
-using com.petronas.myevents.api.Helpers;
 
 namespace com.petronas.myevents.api.Services
 {
     public class EventService : IEventService
     {
         private readonly IEventRepository _eventRepository;
-        private readonly IUserService _userService;
-        public EventService(IEventRepository eventRepository, IUserService userService)
+
+        public EventService(IEventRepository eventRepository)
         {
             _eventRepository = eventRepository;
-            _userService = userService;
         }
 
         public async Task<bool> Bookmark(string eventId, string userId)
@@ -30,18 +29,20 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            var _event = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList().FirstOrDefault();
+            var _event = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList()
+                .FirstOrDefault();
             if (!_event.Bookmarks.Any(x => !x.IsDeleted && x.UserId == userId))
             {
-                var bookmark = new Bookmark()
+                var bookmark = new Bookmark
                 {
                     EventId = eventId,
                     UserId = userId,
-                    Id = Guid.NewGuid().ToString(),
+                    Id = Guid.NewGuid().ToString()
                 };
                 _event.Bookmarks.Add(bookmark);
                 await _eventRepository.Update(_event);
             }
+
             return true;
         }
 
@@ -52,11 +53,10 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            var _event = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList().FirstOrDefault();
+            var _event = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList()
+                .FirstOrDefault();
             for (var i = 0; i < _event.Bookmarks.Count; i++)
-            {
                 _event.Bookmarks.Remove(_event.Bookmarks.FirstOrDefault(x => x.Id == _event.Bookmarks[i].Id));
-            }
             await _eventRepository.Update(_event);
             return true;
         }
@@ -68,9 +68,8 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            var continuation = string.Empty;
-            var currentUser = _userService.GetCurrentUser();
-            var ev = _eventRepository.GetBatch(x => x.Id == id && !x.IsDeleted, feedOptions, out continuation, null).FirstOrDefault();
+            var ev = _eventRepository.GetBatch(x => x.Id == id && !x.IsDeleted, feedOptions, out _, null)
+                .FirstOrDefault();
             return ev == null ? null : GetEventResponse(ev, userId);
         }
 
@@ -81,16 +80,13 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = take,
                 EnableScanInQuery = true
             };
-            if (!string.IsNullOrEmpty(continuationKey))
-            {
-                feedOptions.RequestContinuation = continuationKey;
-            }
-            var continuation = string.Empty;
-            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.IsFeatured, feedOptions, out continuation, x => x.OrderBy(y => y.EventDateFrom));
-            return new EventListViewModel()
+            if (!string.IsNullOrEmpty(continuationKey)) feedOptions.RequestContinuation = continuationKey;
+            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.IsFeatured, feedOptions, out var continuation,
+                x => x.OrderBy(y => y.EventDateFrom));
+            return new EventListViewModel
             {
                 Events = GetEventResponses(ev, userId),
-                ContinuationKey = !string.IsNullOrEmpty(continuation) ? EncryptionService.Crypt(continuation) : string.Empty,
+                ContinuationKey = !string.IsNullOrEmpty(continuation) ? continuation.Crypt() : string.Empty,
                 Take = take,
                 HasNextPage = !string.IsNullOrEmpty(continuation)
             };
@@ -103,11 +99,7 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = take,
                 EnableScanInQuery = true
             };
-            if (!string.IsNullOrEmpty(continuationKey))
-            {
-                feedOptions.RequestContinuation = continuationKey;
-            }
-            var continuation = string.Empty;
+            if (!string.IsNullOrEmpty(continuationKey)) feedOptions.RequestContinuation = continuationKey;
             var sqlQuery = $@"
                 SELECT *
                 FROM Events c
@@ -118,19 +110,19 @@ namespace com.petronas.myevents.api.Services
                         OR ARRAY_CONTAINS(c.Bookmarks, {{ 'UserId': '{userId}' }}, true))
                     ORDER BY c.EventDateFrom ASC";
 
-            var query = new SqlQuerySpec()
+            var query = new SqlQuerySpec
             {
                 QueryText = sqlQuery,
-                Parameters = new SqlParameterCollection()
+                Parameters = new SqlParameterCollection
                 {
                     new SqlParameter("@isDeleted", false)
                 }
             };
-            var ev = _eventRepository.GetBatch(query, feedOptions, out continuation);
-            return new EventListViewModel()
+            var ev = _eventRepository.GetBatch(query, feedOptions, out var continuation);
+            return new EventListViewModel
             {
                 Events = GetEventResponses(ev, userId),
-                ContinuationKey = !string.IsNullOrEmpty(continuation) ? EncryptionService.Crypt(continuation) : string.Empty,
+                ContinuationKey = !string.IsNullOrEmpty(continuation) ? continuation.Crypt() : string.Empty,
                 Take = take,
                 HasNextPage = !string.IsNullOrEmpty(continuation)
             };
@@ -143,16 +135,13 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = take,
                 EnableScanInQuery = true
             };
-            if (!string.IsNullOrEmpty(continuationKey))
-            {
-                feedOptions.RequestContinuation = continuationKey;
-            }
-            var continuation = string.Empty;
-            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.EventDateTo > DateTime.UtcNow, feedOptions, out continuation, x => x.OrderBy(y => y.EventDateFrom));
-            return new EventListViewModel()
+            if (!string.IsNullOrEmpty(continuationKey)) feedOptions.RequestContinuation = continuationKey;
+            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.EventDateTo > DateTime.UtcNow, feedOptions,
+                out var continuation, x => x.OrderBy(y => y.EventDateFrom));
+            return new EventListViewModel
             {
                 Events = GetEventResponses(ev, userId),
-                ContinuationKey = !string.IsNullOrEmpty(continuation) ? EncryptionService.Crypt(continuation) : string.Empty,
+                ContinuationKey = !string.IsNullOrEmpty(continuation) ? continuation.Crypt() : string.Empty,
                 Take = take,
                 HasNextPage = !string.IsNullOrEmpty(continuation)
             };
@@ -165,11 +154,7 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = take,
                 EnableScanInQuery = true
             };
-            if (!string.IsNullOrEmpty(continuationKey))
-            {
-                feedOptions.RequestContinuation = continuationKey;
-            }
-            var continuation = string.Empty;
+            if (!string.IsNullOrEmpty(continuationKey)) feedOptions.RequestContinuation = continuationKey;
             var sqlQuery = $@"
                 SELECT *
                 FROM Events c
@@ -180,21 +165,21 @@ namespace com.petronas.myevents.api.Services
                         OR ARRAY_CONTAINS(c.Bookmarks, {{ 'UserId': '{userId}' }}, true))
                     ORDER BY c.EventDateFrom ASC";
 
-            var query = new SqlQuerySpec()
+            var query = new SqlQuerySpec
             {
                 QueryText = sqlQuery,
-                Parameters = new SqlParameterCollection()
+                Parameters = new SqlParameterCollection
                 {
                     new SqlParameter("@now", DateTime.UtcNow),
                     new SqlParameter("@isDeleted", false),
                     new SqlParameter("@userId", userId)
                 }
             };
-            var ev = _eventRepository.GetBatch(query, feedOptions, out continuation);
-            return new EventListViewModel()
+            var ev = _eventRepository.GetBatch(query, feedOptions, out var continuation);
+            return new EventListViewModel
             {
                 Events = GetEventResponses(ev, userId),
-                ContinuationKey = !string.IsNullOrEmpty(continuation) ? EncryptionService.Crypt(continuation) : string.Empty,
+                ContinuationKey = !string.IsNullOrEmpty(continuation) ? continuation.Crypt() : string.Empty,
                 Take = take,
                 HasNextPage = !string.IsNullOrEmpty(continuation)
             };
@@ -207,16 +192,13 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = take,
                 EnableScanInQuery = true
             };
-            if (!string.IsNullOrEmpty(continuationKey))
-            {
-                feedOptions.RequestContinuation = continuationKey;
-            }
-            var continuation = string.Empty;
-            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.EventName.ToLower().Contains(searchKey.ToLower()), feedOptions, out continuation, x => x.OrderBy(y => y.EventDateFrom));
-            return new EventListViewModel()
+            if (!string.IsNullOrEmpty(continuationKey)) feedOptions.RequestContinuation = continuationKey;
+            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.EventName.ToLower().Contains(searchKey.ToLower()),
+                feedOptions, out var continuation, x => x.OrderBy(y => y.EventDateFrom));
+            return new EventListViewModel
             {
                 Events = GetEventResponses(ev, userId),
-                ContinuationKey = !string.IsNullOrEmpty(continuation) ? EncryptionService.Crypt(continuation) : string.Empty,
+                ContinuationKey = !string.IsNullOrEmpty(continuation) ? continuation.Crypt() : string.Empty,
                 Take = take,
                 HasNextPage = !string.IsNullOrEmpty(continuation)
             };
@@ -224,7 +206,7 @@ namespace com.petronas.myevents.api.Services
 
         private EventResponse GetEventResponse(Event _event, string userId)
         {
-            return new EventResponse()
+            return new EventResponse
             {
                 EventId = _event.Id,
                 ImageUrl = _event.EventImageUrl,
@@ -240,16 +222,15 @@ namespace com.petronas.myevents.api.Services
                 SurveyUrl = _event.SurveyUrl,
                 SurveyResultUrl = _event.SurveyResultUrl,
                 IsBookmark = _event.Bookmarks != null && _event.Bookmarks.Any(x => !x.IsDeleted && x.UserId == userId),
-                UserStatus = _event.Members != null && _event.Members.Any(x => !x.IsDeleted && x.UserId == userId) ?
-                                   _event.Members.FirstOrDefault(x => !x.IsDeleted && x.UserId == userId).EventMemberStatus
-                                   : UserStatus.NEW.ToString()
+                UserStatus = _event.Members != null && _event.Members.Any(x => !x.IsDeleted && x.UserId == userId)
+                    ? _event.Members.FirstOrDefault(x => !x.IsDeleted && x.UserId == userId)?.EventMemberStatus
+                    : UserStatus.NEW.ToString()
             };
-
         }
 
-        private List<EventResponse> GetEventResponses(IEnumerable<Event> _events, string userId)
+        private List<EventResponse> GetEventResponses(IEnumerable<Event> events, string userId)
         {
-            return _events.Select(_event => new EventResponse()
+            return events.Select(_event => new EventResponse
             {
                 EventId = _event.Id,
                 ImageUrl = _event.EventImageUrl,
@@ -265,12 +246,10 @@ namespace com.petronas.myevents.api.Services
                 SurveyUrl = _event.SurveyUrl,
                 SurveyResultUrl = _event.SurveyResultUrl,
                 IsBookmark = _event.Bookmarks != null && _event.Bookmarks.Any(x => !x.IsDeleted && x.UserId == userId),
-                UserStatus = _event.Members != null && _event.Members.Any(x => !x.IsDeleted && x.UserId == userId) ?
-                                   _event.Members.FirstOrDefault(x => !x.IsDeleted && x.UserId == userId).EventMemberStatus
-                                   : UserStatus.NEW.ToString()
+                UserStatus = _event.Members != null && _event.Members.Any(x => !x.IsDeleted && x.UserId == userId)
+                    ? _event.Members.FirstOrDefault(x => !x.IsDeleted && x.UserId == userId)?.EventMemberStatus
+                    : UserStatus.NEW.ToString()
             }).ToList();
         }
-
-
     }
 }

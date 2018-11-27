@@ -1,6 +1,5 @@
 using System;
 using com.petronas.myevents.api.Constants;
-using com.petronas.myevents.api.RequestContracts;
 using com.petronas.myevents.api.Services.Interfaces;
 using com.petronas.myevents.api.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -35,7 +34,6 @@ namespace com.petronas.myevents.api.Functions
                         var events = eventService.GetById(id, DefaultValue.UserId);
                         if (events == null)
                         {
-                            var errorResponse = new ErrorsResponse();
                             var errorMessage = new ErrorMessage
                             {
                                 Code = Convert.ToInt32(ErrorMessageCodes.EventIdNotExistErrorCode),

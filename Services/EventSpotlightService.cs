@@ -24,7 +24,8 @@ namespace com.petronas.myevents.api.Services
                 EnableCrossPartitionQuery = true
             };
             var spotlightList = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList()
-                .FirstOrDefault().Spotlights.Where(x => !x.IsDeleted).ToList();
+                .FirstOrDefault()
+                ?.Spotlights.Where(x => !x.IsDeleted).ToList();
 
             if (spotlightList.Any())
                 return spotlightList.Select(f => new EventSpotlightResponse

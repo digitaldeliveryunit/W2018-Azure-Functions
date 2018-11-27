@@ -29,7 +29,7 @@ namespace com.petronas.myevents.api.Helpers
 
         private static string Base64UrlEncode(string text)
         {
-            if (text == null || text == "") return null;
+            if (string.IsNullOrEmpty(text)) return null;
 
             var bytesToEncode = Encoding.UTF8.GetBytes(text);
             var returnVal = Convert.ToBase64String(bytesToEncode);
@@ -39,7 +39,7 @@ namespace com.petronas.myevents.api.Helpers
 
         private static string Base64UrlDecode(string text)
         {
-            if (text == null || text == "") return null;
+            if (string.IsNullOrEmpty(text)) return null;
 
             text.Replace('-', '+');
             text.Replace('_', '/');
