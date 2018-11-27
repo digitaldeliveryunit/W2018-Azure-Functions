@@ -11,9 +11,13 @@ namespace com.petronas.myevents.api.Models
             Id = Guid.NewGuid().ToString();
         }
 
-        [Key] [JsonProperty("id")] public string Id { get; set; }
+        [Key] [JsonProperty("id")] 
+        public string Id { get; set; }
 
+        [JsonIgnore]
         public bool IsDeleted { get; set; }
+
+        [JsonIgnore]
         public string Discriminator { get; set; }
     }
 }
