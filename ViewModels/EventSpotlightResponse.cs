@@ -1,8 +1,7 @@
-﻿using System;
-namespace com.petronas.myevents.api.ViewModels
+﻿namespace com.petronas.myevents.api.ViewModels
 {
     /// <summary>
-    /// Viewmodel for GetSpotlight API
+    ///     Viewmodel for GetSpotlight API
     /// </summary>
     public class EventSpotlightResponse
     {

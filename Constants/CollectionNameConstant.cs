@@ -1,5 +1,4 @@
-﻿using System;
-namespace com.petronas.myevents.api.Constants
+﻿namespace com.petronas.myevents.api.Constants
 {
     public class CollectionNameConstant
     {
@@ -20,6 +19,5 @@ namespace com.petronas.myevents.api.Constants
         // public const string MODEL_SPOTLIGHT = "Spotlight";
         // public const string MODEL_SUBSESSION = "SubSession";
         // public const string MODEL_VENUE = "Venue";
-
     }
 }

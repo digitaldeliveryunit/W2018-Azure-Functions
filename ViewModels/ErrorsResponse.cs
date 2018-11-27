@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace com.petronas.myevents.api.ViewModels
 {
     public class ErrorsResponse
     {
-        List<ErrorMessage> _errors;
+        private readonly List<ErrorMessage> _errors;
 
         public ErrorsResponse()
         {
@@ -17,12 +16,6 @@ namespace com.petronas.myevents.api.ViewModels
             _errors = errors;
         }
 
-        public void Add(ErrorMessage error)
-        {
-            if (!_errors.Contains(error))
-                _errors.Add(error);
-        }
-
         public IEnumerable<ErrorMessage> Errors
         {
             get
@@ -31,11 +24,17 @@ namespace com.petronas.myevents.api.ViewModels
                     yield return error;
             }
         }
+
+        public void Add(ErrorMessage error)
+        {
+            if (!_errors.Contains(error))
+                _errors.Add(error);
+        }
     }
 
     public class ErrorMessage
     {
-        public String Message { get; set; }
+        public string Message { get; set; }
         public int Code { get; set; }
     }
 }

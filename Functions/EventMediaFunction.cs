@@ -1,19 +1,18 @@
-  using System;
-  using com.petronas.myevents.api.Constants;
-  using com.petronas.myevents.api.RequestContracts;
-  using com.petronas.myevents.api.Services.Interfaces;
-  using com.petronas.myevents.api.ViewModels;
-  using Microsoft.AspNetCore.Http;
-  using Microsoft.AspNetCore.Mvc;
-  using Microsoft.Azure.WebJobs;
-  using Microsoft.Azure.WebJobs.Extensions.Http;
-  using Microsoft.Extensions.Logging;
-  using Newtonsoft.Json;
-  using Willezone.Azure.WebJobs.Extensions.DependencyInjection;
-  using com.petronas.myevents.api.Helpers;
+using System;
+using com.petronas.myevents.api.Constants;
+using com.petronas.myevents.api.RequestContracts;
+using com.petronas.myevents.api.Services.Interfaces;
+using com.petronas.myevents.api.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Willezone.Azure.WebJobs.Extensions.DependencyInjection;
 
-  namespace com.petronas.myevents.api.Functions
-  {
+namespace com.petronas.myevents.api.Functions
+{
     public class EventMediaFunction
     {
         [FunctionName("EventMediaFunction")]
@@ -21,18 +20,23 @@
             [HttpTrigger(
                 AuthorizationLevel.Anonymous,
                 RequestMethods.Get,
-                Route = "Media/{id}/Type/{type}")]HttpRequest request,
-                string id,
-                string type,
+                Route = "Media/{id}/Type/{type}")]
+            HttpRequest request,
+            string id,
+            string type,
             ILogger log,
-            [Inject]IEventService eventService,[Inject]IEventMediaService eventMediaService)
+            [Inject] IEventService eventService, [Inject] IEventMediaService eventMediaService)
         {
             try
             {
-                var query = new RouteRequest()
+                var query = new RouteRequest
                 {
-                    Skip = !string.IsNullOrEmpty(request.Query["Skip"].ToString()) ? int.Parse(request.Query["Skip"]) : DefaultValue.Skip,
-                    Take = !string.IsNullOrEmpty(request.Query["Take"].ToString()) ? int.Parse(request.Query["Take"]) : DefaultValue.Take
+                    Skip = !string.IsNullOrEmpty(request.Query["Skip"].ToString())
+                        ? int.Parse(request.Query["Skip"])
+                        : DefaultValue.Skip,
+                    Take = !string.IsNullOrEmpty(request.Query["Take"].ToString())
+                        ? int.Parse(request.Query["Take"])
+                        : DefaultValue.Take
                 };
                 switch (request.Method)
                 {
@@ -41,7 +45,7 @@
                         if (events == null)
                         {
                             var errorResponse = new ErrorsResponse();
-                            var errorMessage = new ErrorMessage()
+                            var errorMessage = new ErrorMessage
                             {
                                 Code = Convert.ToInt32(ErrorMessageCodes.EventIdNotExistErrorCode),
                                 Message = ErrorMessageCodes.EventIdNotExistErrorMessage
@@ -51,6 +55,7 @@
 
                             return new NotFoundObjectResult(errorMessage);
                         }
+
                         var media = eventMediaService.GetMedias(id, "Video", query.Skip, query.Take);
                         return new OkObjectResult(media);
                     default:
@@ -61,7 +66,7 @@
             {
                 log.LogError(ex.Message, ex);
                 ErrorMessage error;
-                error = new ErrorMessage()
+                error = new ErrorMessage
                 {
                     Code = Convert.ToInt32(ErrorMessageCodes.GetEventMediaError),
                     Message = ErrorMessageCodes.GetEventMediaMessage
@@ -70,4 +75,4 @@
             }
         }
     }
-  }
+}

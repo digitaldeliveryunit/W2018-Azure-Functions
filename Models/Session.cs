@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 namespace com.petronas.myevents.api.Models
 {
     public class Session : ModelBase

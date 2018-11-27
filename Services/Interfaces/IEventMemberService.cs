@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using com.petronas.myevents.api.Models;
 
 namespace com.petronas.myevents.api.Services.Interfaces

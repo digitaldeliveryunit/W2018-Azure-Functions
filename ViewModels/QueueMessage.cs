@@ -1,5 +1,4 @@
-﻿using System;
-namespace com.petronas.myevents.api.ViewModels
+﻿namespace com.petronas.myevents.api.ViewModels
 {
     public class QueueMessage
     {

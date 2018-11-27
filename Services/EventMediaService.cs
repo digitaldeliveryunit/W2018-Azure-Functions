@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using com.petronas.myevents.api.Models;
 using com.petronas.myevents.api.Repositories.Interfaces;
@@ -11,6 +10,7 @@ namespace com.petronas.myevents.api.Services
     public class EventMediaService : IEventMediaService
     {
         private readonly IEventRepository _eventRepository;
+
         public EventMediaService(IEventRepository eventRepository)
         {
             _eventRepository = eventRepository;
@@ -23,7 +23,8 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            return _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList().FirstOrDefault().Medias.Where(x=>!x.IsDeleted && x.MediaType == mediaType).Skip(skip).Take(take).ToList();
+            return _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList().FirstOrDefault()
+                .Medias.Where(x => !x.IsDeleted && x.MediaType == mediaType).Skip(skip).Take(take).ToList();
         }
     }
 }

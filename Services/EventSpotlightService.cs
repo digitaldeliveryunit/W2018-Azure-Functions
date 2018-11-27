@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using com.petronas.myevents.api.Repositories.Interfaces;
 using com.petronas.myevents.api.Services.Interfaces;
@@ -16,6 +15,7 @@ namespace com.petronas.myevents.api.Services
         {
             _eventRepository = eventRepository;
         }
+
         public IEnumerable<EventSpotlightResponse> GetSpotlights(string eventId, int skip, int take)
         {
             var feedOptions = new FeedOptions
@@ -23,10 +23,10 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            var spotlightList = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList().FirstOrDefault().Spotlights.Where(x=>!x.IsDeleted).Skip(skip).Take(take).ToList();
+            var spotlightList = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList()
+                .FirstOrDefault().Spotlights.Where(x => !x.IsDeleted).Skip(skip).Take(take).ToList();
 
             if (spotlightList.Any())
-            {
                 return spotlightList.Select(f => new EventSpotlightResponse
                 {
                     SpotlightId = f.Id,
@@ -35,7 +35,6 @@ namespace com.petronas.myevents.api.Services
                     Description = f.SpotlightDescription,
                     ImageUrl = f.ImageUrl
                 });
-            }
             return Enumerable.Empty<EventSpotlightResponse>();
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using com.petronas.myevents.api.Configurations;
+﻿using com.petronas.myevents.api.Configurations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

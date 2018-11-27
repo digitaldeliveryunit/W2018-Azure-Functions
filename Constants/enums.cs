@@ -1,26 +1,28 @@
-﻿
-namespace com.petronas.myevents.api.Constants
+﻿namespace com.petronas.myevents.api.Constants
 {
-    enum QueueType
+    internal enum QueueType
     {
         JOIN,
         UN_JOIN,
         BOOKMARK,
         UNBOOKMARK
     }
-    enum UserStatus
+
+    internal enum UserStatus
     {
         NEW,
         CHECKEDIN,
         JOINED,
         INVITED
     }
-    enum EventStatus
+
+    internal enum EventStatus
     {
         PUBLISHED,
         DRAFT
     }
-    enum EventType
+
+    internal enum EventType
     {
         PUBLIC,
         PRIVATE

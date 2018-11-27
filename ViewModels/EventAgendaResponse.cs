@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace com.petronas.myevents.api.ViewModels
 {
     /// <summary>
-    /// Viewmodel for GetAgendas API
+    ///     Viewmodel for GetAgendas API
     /// </summary>
     public class EventAgendaResponse
     {

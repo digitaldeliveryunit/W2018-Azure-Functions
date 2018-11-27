@@ -1,9 +1,8 @@
-﻿using System;
-using com.petronas.myevents.api.Models;
-using com.petronas.myevents.api.Services.Interfaces;
-using System.Linq;
+﻿using System.Linq;
 using com.petronas.myevents.api.Constants;
+using com.petronas.myevents.api.Models;
 using com.petronas.myevents.api.Repositories.Interfaces;
+using com.petronas.myevents.api.Services.Interfaces;
 using Microsoft.Azure.Documents.Client;
 
 namespace com.petronas.myevents.api.Services
@@ -16,6 +15,7 @@ namespace com.petronas.myevents.api.Services
         {
             _userRepository = userRepository;
         }
+
         public User GetCurrentUser()
         {
             var feedOptions = new FeedOptions
@@ -23,7 +23,8 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            return _userRepository.GetAll(x => !x.IsDeleted && x.Id == DefaultValue.UserId, feedOptions).ToList().FirstOrDefault();
+            return _userRepository.GetAll(x => !x.IsDeleted && x.Id == DefaultValue.UserId, feedOptions).ToList()
+                .FirstOrDefault();
         }
     }
 }

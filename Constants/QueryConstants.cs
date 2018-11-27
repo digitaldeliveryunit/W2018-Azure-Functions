@@ -15,6 +15,4 @@ namespace com.petronas.myevents.api.Constants
         public const string EVENT_SPOTLIGHTS = "Spotlight";
         public const string EVENT_AGENDA = "Agenda";
     }
-
-    
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace com.petronas.myevents.api.Models
 {
-    public class Event:ModelBase
+    public class Event : ModelBase
     {
         public string EventName { get; set; }
         public string EventDescription { get; set; }

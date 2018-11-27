@@ -1,5 +1,4 @@
-﻿using System;
-namespace com.petronas.myevents.api.Constants
+﻿namespace com.petronas.myevents.api.Constants
 {
     public static class ErrorMessageCodes
     {
@@ -85,7 +84,9 @@ namespace com.petronas.myevents.api.Constants
         public static readonly string GetAttendeesCountByEventMessage = "Error occured in GetAttendeesCountByEvent";
 
         public static readonly string GetAttendeesAgendaCountByEventError = "28";
-        public static readonly string GetAttendeesAgendaCountByEventMessage = "Error occured in GetAttendeesAgendaCountByEvent";
+
+        public static readonly string GetAttendeesAgendaCountByEventMessage =
+            "Error occured in GetAttendeesAgendaCountByEvent";
 
         public static readonly string GetAttendeesByEventError = "29";
         public static readonly string GetAttendeesByEventMessage = "Error occured in GetAttendeesByEvent";
@@ -157,7 +158,9 @@ namespace com.petronas.myevents.api.Constants
         public static readonly string AgendaIdNotExistErrorMessage = "AgendaIdNotExist";
 
         public static readonly string AgendaNameAlreadyExistsErrorCode = "52";
-        public static readonly string AgendaNameAlreadyExistsErrorMessage = "AgendaName is already exists! Try with different agendaname";
+
+        public static readonly string AgendaNameAlreadyExistsErrorMessage =
+            "AgendaName is already exists! Try with different agendaname";
 
         public static readonly string TimeFromShouldBeCorrectFormatErrorCode = "53";
         public static readonly string TimeFromShouldBeCorrectFormatErrorMessage = "TimeFrom must be in correct format";
@@ -181,10 +184,14 @@ namespace com.petronas.myevents.api.Constants
         public static readonly string UserIdNotExistErrorMessage = "UserId not exist";
 
         public static readonly string EventNameAlreadyExistErrorCode = "60";
-        public static readonly string EventNameAlreadyExistErrorMessage = "EventName is already exists! Try with different name";
+
+        public static readonly string EventNameAlreadyExistErrorMessage =
+            "EventName is already exists! Try with different name";
 
         public static readonly string DateToMustBeGreaterthanDateFromErrorCode = "61";
-        public static readonly string DateToMustBeGreaterthanDateFromErrorMessage = "DateTo must be greater than DateFrom";
+
+        public static readonly string DateToMustBeGreaterthanDateFromErrorMessage =
+            "DateTo must be greater than DateFrom";
 
         public static readonly string SeatTotalMustNotBeNegativeErrorCode = "62";
         public static readonly string SeatTotalMustNotBeNegativeErrorMessage = "SeatTotal must not be negative";
@@ -196,7 +203,9 @@ namespace com.petronas.myevents.api.Constants
         public static readonly string NoSpotlightErrorMessage = "No spotlight";
 
         public static readonly string SpotlightNameAlreadyExistsErrorCode = "65";
-        public static readonly string SpotlightNameAlreadyExistsErrorMessage = "Spotlight name already exists! Try with different name";
+
+        public static readonly string SpotlightNameAlreadyExistsErrorMessage =
+            "Spotlight name already exists! Try with different name";
 
         public static readonly string NotTheOrganizersErrorCode = "66";
         public static readonly string NotTheOrganizersErrorMessage = "You are not the organizers for this event";
@@ -208,10 +217,14 @@ namespace com.petronas.myevents.api.Constants
         public static readonly string NoPermissionToCheckinErrorMessage = "You dont have permission to checkin";
 
         public static readonly string UserCannotJoinAgendaErrorCode = "69";
-        public static readonly string UserCannotJoinAgendaErrorMessage = "User cannot join agenda if he/she didn't join the event";
+
+        public static readonly string UserCannotJoinAgendaErrorMessage =
+            "User cannot join agenda if he/she didn't join the event";
 
         public static readonly string NotJoinprivateEventWithoutInvitationErrorCode = "70";
-        public static readonly string NotJoinprivateEventWithoutInvitationErrorMessage = "You cannot join this private event without invitation";
+
+        public static readonly string NotJoinprivateEventWithoutInvitationErrorMessage =
+            "You cannot join this private event without invitation";
 
         public static readonly string RemoveYourselfErrorCode = "71";
         public static readonly string RemoveYourselfErrorMessage = "You cannot remove yourself from Organizer";
@@ -289,10 +302,14 @@ namespace com.petronas.myevents.api.Constants
         public static readonly string GetBeaconLocationMessage = "Error occured in GetBeaconLocation";
 
         public static readonly string LocationNameAlreadyExistErrorCode = "95";
-        public static readonly string LocationNameAlreadyExistMessage = "Location name is already exists! Try with different name";
+
+        public static readonly string LocationNameAlreadyExistMessage =
+            "Location name is already exists! Try with different name";
 
         public static readonly string VenueNameAlreadyExistErrorCode = "96";
-        public static readonly string VenueNameAlreadyExistMessage = "Venue name is already exists! Try with different name";
+
+        public static readonly string VenueNameAlreadyExistMessage =
+            "Venue name is already exists! Try with different name";
 
         public static readonly string PostVenueBeaconError = "97";
         public static readonly string PostVenueBeaconMessage = "Error occured in PostVenuBeacon";
@@ -310,10 +327,14 @@ namespace com.petronas.myevents.api.Constants
         public static readonly string GetAvailableBeaconErrorMessage = "Error occured in GetAvailableBeacon";
 
         public static readonly string BeaconNameAlreadyExistErrorCode = "102";
-        public static readonly string BeaconNameAlreadyExistMessage = "Beacon name is already exists! Try with different name";
+
+        public static readonly string BeaconNameAlreadyExistMessage =
+            "Beacon name is already exists! Try with different name";
 
         public static readonly string BeaconsLocationAlreadyExistErrorCode = "103";
-        public static readonly string BeaconsLocationAlreadyExistMessage = "Beacon id is already assign! Try with different beacon id";
+
+        public static readonly string BeaconsLocationAlreadyExistMessage =
+            "Beacon id is already assign! Try with different beacon id";
 
         public static readonly string LocationSearchError = "104";
         public static readonly string LocationSearchErrorMessage = "Error occured in location search";
@@ -328,10 +349,14 @@ namespace com.petronas.myevents.api.Constants
         public static readonly string GetVenueByLocationIdMessage = "Error occured in GetVenueByLocationId";
 
         public static readonly string AvailableLocationsWithoutVenueError = "108";
-        public static readonly string AvailableLocationsWithoutVenueErrorMessage = "Error occured in AvailableLocationsWithoutVenue";
+
+        public static readonly string AvailableLocationsWithoutVenueErrorMessage =
+            "Error occured in AvailableLocationsWithoutVenue";
 
         public static readonly string AvailableLocationsWithoutBeaconError = "109";
-        public static readonly string AvailableLocationsWithoutBeaconErrorMessage = "Error occured in AvailableLocationsWithoutBeacon";
+
+        public static readonly string AvailableLocationsWithoutBeaconErrorMessage =
+            "Error occured in AvailableLocationsWithoutBeacon";
 
         public static readonly string CheckNameError = "110";
         public static readonly string CheckNameErrorMessage = "Error occured in CheckName";
@@ -340,22 +365,30 @@ namespace com.petronas.myevents.api.Constants
         public static readonly string VenueImageUploadFailedErrorMessage = "Error occured in VenueImageUpload";
 
         public static readonly string EventAlreadyExistInThisDurationErrorCode = "112";
-        public static readonly string EventAlreadyExistInThisDurationErrorMessage = "Event is already exists in this duration! Try with different date/time";
+
+        public static readonly string EventAlreadyExistInThisDurationErrorMessage =
+            "Event is already exists in this duration! Try with different date/time";
 
         public static readonly string AgendaAlreadyExistInThisDurationErrorCode = "113";
-        public static readonly string AgendaAlreadyExistInThisDurationErrorMessage = "Agenda is already exists in this duration! Try with different date/time";
+
+        public static readonly string AgendaAlreadyExistInThisDurationErrorMessage =
+            "Agenda is already exists in this duration! Try with different date/time";
 
         public static readonly string AgendaShouldBeEventTimeRangeErrorCode = "114";
         public static readonly string AgendaShouldBeEventTimeRangeErrorMessage = "Agenda should be in event time range";
 
         public static readonly string VenueDateShouldBeEventDateRangeErrorCode = "115";
-        public static readonly string VenueDateShouldBeEventDateRangeErrorMessage = "Venue date should be in event date range";
+
+        public static readonly string VenueDateShouldBeEventDateRangeErrorMessage =
+            "Venue date should be in event date range";
 
         public static readonly string NoRecordsFoundWithLocationIdError = "116";
         public static readonly string NoRecordsFoundWithLocationIdErrorMessage = "No records found";
 
         public static readonly string UserNotFoundInAdErrorCode = "117";
-        public static readonly string UserNotFoundInAdErrorMessage = "User(s) not found in Active Directory with provided name.";
+
+        public static readonly string UserNotFoundInAdErrorMessage =
+            "User(s) not found in Active Directory with provided name.";
 
         public static readonly string EmailAddressInvalidFormatErrorCode = "118";
         public static readonly string EmailAddressInvalidFormatErrorMessage = "Email Address in invalid format.";
@@ -365,15 +398,20 @@ namespace com.petronas.myevents.api.Constants
 
         public static readonly string UnAuthenticatedUserMessage = "User is not Authenicated";
         public static readonly string AccessDeniedMessage = "Access denied.Please contact the event organizer.";
-        public static readonly string AuthenticationCredentialsInvalidMessage = "Authentication credentials were missing or incorrect";
-         internal static readonly string GetUserProfileError = "";
+
+        public static readonly string AuthenticationCredentialsInvalidMessage =
+            "Authentication credentials were missing or incorrect";
+
+        internal static readonly string GetUserProfileError = "";
         internal static readonly string GetUserProfileMessage = "";
         internal static readonly string GetAllUpcomingEventsError = "";
         internal static readonly string GetAllUpcomingEventsMessage = "";
         internal static readonly string GetUpcomingEventsError = "";
         internal static readonly string GetUpcomingEventsMessage = "";
         internal static readonly string GetPastEventsError = "";
+
         internal static readonly string GetPastEventsMessage = "";
+
         //internal static readonly DateTime PostEventJoinError;
         internal static string GetFeaturedEventsMessage = "";
 

@@ -1,4 +1,3 @@
-using System;
 namespace com.petronas.myevents.api.Constants
 {
     public class QueueNames
