@@ -123,9 +123,7 @@ namespace com.petronas.myevents.api.Services
                 QueryText = sqlQuery,
                 Parameters = new SqlParameterCollection()
                 {
-                    new SqlParameter("@now", DateTime.UtcNow),
-                    new SqlParameter("@isDeleted", false),
-                    new SqlParameter("@userId", userId)
+                    new SqlParameter("@isDeleted", false)
                 }
             };
             var ev = _eventRepository.GetBatch(query, feedOptions, out continuation);

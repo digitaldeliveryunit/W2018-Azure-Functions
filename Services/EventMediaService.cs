@@ -16,7 +16,7 @@ namespace com.petronas.myevents.api.Services
             _eventRepository = eventRepository;
         }
 
-        public IEnumerable<Media> GetMedias(string eventId, string mediaType, int skip, int take)
+        public IEnumerable<Media> GetMedias(string eventId, string mediaType)
         {
             var feedOptions = new FeedOptions
             {
@@ -24,7 +24,7 @@ namespace com.petronas.myevents.api.Services
                 EnableCrossPartitionQuery = true
             };
             return _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList().FirstOrDefault()
-                .Medias.Where(x => !x.IsDeleted && x.MediaType == mediaType).Skip(skip).Take(take).ToList();
+                .Medias.Where(x => !x.IsDeleted && x.MediaType == mediaType).ToList();
         }
     }
 }

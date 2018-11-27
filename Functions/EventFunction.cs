@@ -77,11 +77,6 @@
         {
             try
             {
-                var query = new RouteRequest()
-                {
-                    Skip = !string.IsNullOrEmpty(request.Query["Skip"].ToString()) ? int.Parse(request.Query["Skip"]) : DefaultValue.Skip,
-                    Take = !string.IsNullOrEmpty(request.Query["Take"].ToString()) ? int.Parse(request.Query["Take"]) : DefaultValue.Take
-                };
                 switch (request.Method)
                 {
                     case RequestMethods.Get:
@@ -98,7 +93,7 @@
 
                             return new NotFoundObjectResult(errorMessage);
                         }
-                        var spotlight = spotlightService.GetSpotlights(eventId, query.Skip, query.Take);
+                        var spotlight = spotlightService.GetSpotlights(eventId);
 
                         if (spotlight == null)
                         {

@@ -29,15 +29,6 @@ namespace com.petronas.myevents.api.Functions
         {
             try
             {
-                var query = new RouteRequest
-                {
-                    Skip = !string.IsNullOrEmpty(request.Query["Skip"].ToString())
-                        ? int.Parse(request.Query["Skip"])
-                        : DefaultValue.Skip,
-                    Take = !string.IsNullOrEmpty(request.Query["Take"].ToString())
-                        ? int.Parse(request.Query["Take"])
-                        : DefaultValue.Take
-                };
                 switch (request.Method)
                 {
                     case RequestMethods.Get:
@@ -56,7 +47,7 @@ namespace com.petronas.myevents.api.Functions
                             return new NotFoundObjectResult(errorMessage);
                         }
 
-                        var media = eventMediaService.GetMedias(id, type, query.Skip, query.Take);
+                        var media = eventMediaService.GetMedias(id, type);
                         return new OkObjectResult(media);
                     default:
                         return new BadRequestResult();

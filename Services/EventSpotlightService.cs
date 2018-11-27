@@ -16,7 +16,7 @@ namespace com.petronas.myevents.api.Services
             _eventRepository = eventRepository;
         }
 
-        public IEnumerable<EventSpotlightResponse> GetSpotlights(string eventId, int skip, int take)
+        public IEnumerable<EventSpotlightResponse> GetSpotlights(string eventId)
         {
             var feedOptions = new FeedOptions
             {
@@ -24,7 +24,7 @@ namespace com.petronas.myevents.api.Services
                 EnableCrossPartitionQuery = true
             };
             var spotlightList = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList()
-                .FirstOrDefault().Spotlights.Where(x => !x.IsDeleted).Skip(skip).Take(take).ToList();
+                .FirstOrDefault().Spotlights.Where(x => !x.IsDeleted).ToList();
 
             if (spotlightList.Any())
                 return spotlightList.Select(f => new EventSpotlightResponse
