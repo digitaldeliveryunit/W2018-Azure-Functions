@@ -157,17 +157,24 @@ namespace com.petronas.myevents.api.Services
                 feedOptions.RequestContinuation = continuationKey;
             }
             var continuation = string.Empty;
+            var sqlQuery = $@"
+                SELECT *
+                FROM Events c
+                WHERE c.IsDeleted = @isDeleted
+                    AND c.EventDateTo > '{DateTime.UtcNow.ToString("YYYY-MM-DDThh-mm-ss")}'
+                    AND (
+                        ARRAY_CONTAINS(c.Members, {{ 'UserId': '{userId}' }}, true)
+                        OR ARRAY_CONTAINS(c.Bookmarks, {{ 'UserId': '{userId}' }}, true))";
+
             var query = new SqlQuerySpec()
             {
-                QueryText = "SELECT * FROM Events c "+
-                             "WHERE c.IsDeleted = @isDeleted AND c.EventDateTo > '"+DateTime.UtcNow.ToString("yyyy-MM-ddThh:mm:ss")+"' AND" +
-                    " ARRAY_CONTAINS(c.Members, { 'UserId': '"+userId+"' }, true) OR ARRAY_CONTAINS(c.Bookmarks, { 'UserId': '"+userId+"' }, true)",
+                QueryText = sqlQuery,
                 Parameters = new SqlParameterCollection()
-                                                    {
-                                                        new SqlParameter("@now", DateTime.UtcNow),
-                                                        new SqlParameter("@isDeleted", false),
-                                                        new SqlParameter("@userId", userId)
-                                                    }
+                {
+                    new SqlParameter("@now", DateTime.UtcNow),
+                    new SqlParameter("@isDeleted", false),
+                    new SqlParameter("@userId", userId)
+                }
             };
             var ev = _eventRepository.GetBatch(query, feedOptions, out continuation);
             return new EventListViewModel()
