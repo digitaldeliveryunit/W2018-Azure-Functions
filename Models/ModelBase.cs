@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace com.petronas.myevents.api.Models
 {
@@ -11,6 +12,7 @@ namespace com.petronas.myevents.api.Models
         }
 
         [Key]
+        [JsonProperty("id")]
         public string Id { get; set; }
         public bool IsDeleted { get; set; }
         public string Discriminator { get; set; }

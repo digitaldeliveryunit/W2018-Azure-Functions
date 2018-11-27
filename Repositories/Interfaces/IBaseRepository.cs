@@ -15,6 +15,9 @@ namespace com.petronas.myevents.api.Repositories.Interfaces
         IQueryable<T> GetAll(Expression<Func<T, bool>> predicate, FeedOptions feedOptions);
 
         IEnumerable<T> GetBatch(Expression<Func<T, bool>> predicate, FeedOptions feedOptions, out string continuationKey, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy);
+       
+        IEnumerable<T> GetBatch(SqlQuerySpec sqlExpression, FeedOptions feedOptions, out string continuationKey);
+
         IQueryable<T> GetAll(string sqlExpression, FeedOptions feedOptions);
         Task<Document> Add(T item);
         Task<Document> Update(T item);

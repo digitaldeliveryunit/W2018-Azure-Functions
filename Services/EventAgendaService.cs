@@ -24,7 +24,7 @@ namespace com.petronas.myevents.api.Services
         public IEnumerable<EventAgendaResponse> GetAgendas(string eventId)
         {
             var user = _userService.GetCurrentUser();
-            var result = _sessionRepossitory.GetAll(x => !x.IsDeleted && x.EventId == eventId, null).Select(s => new EventAgendaResponse()
+            var result = _sessionRepossitory.GetAll(x => !x.IsDeleted && x.EventId == eventId, null).ToList().Select(s => new EventAgendaResponse()
             {
                 AgendaId = s.Id,
                 AgendaName = s.AgendaName,
@@ -41,7 +41,7 @@ namespace com.petronas.myevents.api.Services
                     TimeTo = ss.TimeTo,
                     Venue = ss.Venue.VenueName
                 }).ToList()
-            }).ToList();
+            });
             return result;
 
         }

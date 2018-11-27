@@ -23,7 +23,7 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            var spotlightList = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault().Spotlights.Where(x=>!x.IsDeleted).Skip(skip).Take(take).ToList();
+            var spotlightList = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList().FirstOrDefault().Spotlights.Where(x=>!x.IsDeleted).Skip(skip).Take(take).ToList();
 
             if (spotlightList.Any())
             {

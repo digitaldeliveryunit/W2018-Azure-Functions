@@ -95,6 +95,10 @@ namespace com.petronas.myevents.api.Migrations
                 //suria KLCC
                 new Event(){
                     Discriminator = "Event",
+                     Members = new List<EventMember>(),
+                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "MRCSB OE R2 Power Up Session",
                     EventType = "Public",
@@ -114,6 +118,10 @@ namespace com.petronas.myevents.api.Migrations
                 //traders
                 new Event(){
                     Discriminator = "Event",
+                     Members = new List<EventMember>(),
+                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "Tender Committee Secretaries Round Table Meeting No 2",
                     EventType = "Public",
@@ -138,6 +146,8 @@ namespace com.petronas.myevents.api.Migrations
                     Discriminator = "Event",
                     Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "Formula 1 PETRONAS Malaysia Grand Prix 2018",
                     EventType = "Public",
@@ -159,6 +169,8 @@ namespace com.petronas.myevents.api.Migrations
                     Discriminator = "Event",
                     Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "BAMup Strategy 2019 & PUReCOP#4 2018",
                     EventType = "Public",
@@ -181,8 +193,10 @@ namespace com.petronas.myevents.api.Migrations
                 //twins
                 new Event(){
                     Discriminator = "Event",
-                        Members = new List<EventMember>(),
+                         Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "Tafseer 1.0 [Sessions to bring us closer to Al-Quran]",
                     EventType = "Public",
@@ -204,6 +218,8 @@ namespace com.petronas.myevents.api.Migrations
                     Discriminator = "Event",
                         Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "HSE Day",
                     EventType = "Public",
@@ -223,8 +239,10 @@ namespace com.petronas.myevents.api.Migrations
                 //twins
                 new Event(){
                     Discriminator = "Event",
-                        Members = new List<EventMember>(),
+                       Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "PETRONAS ICT Core Academy Foundation for Executives",
                     EventType = "Public",
@@ -244,8 +262,10 @@ namespace com.petronas.myevents.api.Migrations
                 //etiqa
                 new Event(){
                     Discriminator = "Event",
-                        Members = new List<EventMember>(),
+                         Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "In It 2 Win It Session 8",
                     EventType = "Public",
@@ -266,6 +286,140 @@ namespace com.petronas.myevents.api.Migrations
                     Discriminator = "Event",
                         Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
+                    Id = Guid.NewGuid().ToString(),
+                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
+                    EventType = "Public",
+                    EventDateTo = new DateTime(2018,12,28,16,0,0),
+                    EventStatus = "Published",
+                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
+                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
+                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
+                    IsFeatured = false,
+                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
+                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
+                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
+                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
+                    SurveyUrl = null,
+                    SurveyResultUrl = null
+                }, //twins
+                new Event(){
+                    Discriminator = "Event",
+                       Members = new List<EventMember>(),
+                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
+                    Id = Guid.NewGuid().ToString(),
+                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
+                    EventType = "Public",
+                    EventDateTo = new DateTime(2018,12,28,16,0,0),
+                    EventStatus = "Published",
+                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
+                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
+                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
+                    IsFeatured = false,
+                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
+                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
+                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
+                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
+                    SurveyUrl = null,
+                    SurveyResultUrl = null
+                }, //twins
+                new Event(){
+                    Discriminator = "Event",
+                       Members = new List<EventMember>(),
+                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
+                    Id = Guid.NewGuid().ToString(),
+                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
+                    EventType = "Public",
+                    EventDateTo = new DateTime(2018,12,28,16,0,0),
+                    EventStatus = "Published",
+                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
+                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
+                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
+                    IsFeatured = false,
+                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
+                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
+                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
+                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
+                    SurveyUrl = null,
+                    SurveyResultUrl = null
+                }, //twins
+                new Event(){
+                    Discriminator = "Event",
+                       Members = new List<EventMember>(),
+                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
+                    Id = Guid.NewGuid().ToString(),
+                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
+                    EventType = "Public",
+                    EventDateTo = new DateTime(2018,12,28,16,0,0),
+                    EventStatus = "Published",
+                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
+                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
+                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
+                    IsFeatured = false,
+                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
+                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
+                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
+                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
+                    SurveyUrl = null,
+                    SurveyResultUrl = null
+                }, //twins
+                new Event(){
+                    Discriminator = "Event",
+                      Members = new List<EventMember>(),
+                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
+                    Id = Guid.NewGuid().ToString(),
+                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
+                    EventType = "Public",
+                    EventDateTo = new DateTime(2018,12,28,16,0,0),
+                    EventStatus = "Published",
+                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
+                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
+                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
+                    IsFeatured = false,
+                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
+                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
+                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
+                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
+                    SurveyUrl = null,
+                    SurveyResultUrl = null
+                }, //twins
+                new Event(){
+                    Discriminator = "Event",
+                         Members = new List<EventMember>(),
+                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
+                    Id = Guid.NewGuid().ToString(),
+                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
+                    EventType = "Public",
+                    EventDateTo = new DateTime(2018,12,28,16,0,0),
+                    EventStatus = "Published",
+                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
+                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
+                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
+                    IsFeatured = false,
+                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
+                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
+                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
+                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
+                    SurveyUrl = null,
+                    SurveyResultUrl = null
+                }, //twins
+                new Event(){
+                    Discriminator = "Event",
+                       Members = new List<EventMember>(),
+                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "PETRONAS ICT Core Academy Foundation for Executives",
                     EventType = "Public",
@@ -286,6 +440,8 @@ namespace com.petronas.myevents.api.Migrations
                     Discriminator = "Event",
                         Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "PETRONAS ICT Core Academy Foundation for Executives",
                     EventType = "Public",
@@ -306,6 +462,52 @@ namespace com.petronas.myevents.api.Migrations
                     Discriminator = "Event",
                         Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
+                    Id = Guid.NewGuid().ToString(),
+                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
+                    EventType = "Public",
+                    EventDateTo = new DateTime(2018,12,28,16,0,0),
+                    EventStatus = "Published",
+                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
+                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
+                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
+                    IsFeatured = false,
+                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
+                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
+                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
+                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
+                    SurveyUrl = null,
+                    SurveyResultUrl = null
+                }, //twins
+                new Event(){
+                    Discriminator = "Event",
+                      Members = new List<EventMember>(),
+                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
+                    Id = Guid.NewGuid().ToString(),
+                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
+                    EventType = "Public",
+                    EventDateTo = new DateTime(2018,12,28,16,0,0),
+                    EventStatus = "Published",
+                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
+                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
+                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
+                    IsFeatured = false,
+                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
+                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
+                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
+                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
+                    SurveyUrl = null,
+                    SurveyResultUrl = null
+                }, //twins
+                new Event(){
+                    Discriminator = "Event",
+                    Members = new List<EventMember>(),
+                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "PETRONAS ICT Core Academy Foundation for Executives",
                     EventType = "Public",
@@ -326,6 +528,30 @@ namespace com.petronas.myevents.api.Migrations
                     Discriminator = "Event",
                         Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
+                    Id = Guid.NewGuid().ToString(),
+                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
+                    EventType = "Public",
+                    EventDateTo = new DateTime(2018,12,28,16,0,0),
+                    EventStatus = "Published",
+                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
+                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
+                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
+                    IsFeatured = false,
+                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
+                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
+                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
+                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
+                    SurveyUrl = null,
+                    SurveyResultUrl = null
+                }, //twins
+                new Event(){
+                    Discriminator = "Event",
+                       Members = new List<EventMember>(),
+                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "PETRONAS ICT Core Academy Foundation for Executives",
                     EventType = "Public",
@@ -346,6 +572,8 @@ namespace com.petronas.myevents.api.Migrations
                     Discriminator = "Event",
                         Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "PETRONAS ICT Core Academy Foundation for Executives",
                     EventType = "Public",
@@ -364,188 +592,10 @@ namespace com.petronas.myevents.api.Migrations
                 }, //twins
                 new Event(){
                     Discriminator = "Event",
-                        Members = new List<EventMember>(),
+                       Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
-                    Id = Guid.NewGuid().ToString(),
-                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
-                    EventType = "Public",
-                    EventDateTo = new DateTime(2018,12,28,16,0,0),
-                    EventStatus = "Published",
-                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
-                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
-                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
-                    IsFeatured = false,
-                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
-                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
-                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
-                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
-                    SurveyUrl = null,
-                    SurveyResultUrl = null
-                }, //twins
-                new Event(){
-                    Discriminator = "Event",
-                        Members = new List<EventMember>(),
-                    Bookmarks = new List<Bookmark>(),
-                    Id = Guid.NewGuid().ToString(),
-                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
-                    EventType = "Public",
-                    EventDateTo = new DateTime(2018,12,28,16,0,0),
-                    EventStatus = "Published",
-                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
-                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
-                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
-                    IsFeatured = false,
-                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
-                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
-                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
-                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
-                    SurveyUrl = null,
-                    SurveyResultUrl = null
-                }, //twins
-                new Event(){
-                    Discriminator = "Event",
-                        Members = new List<EventMember>(),
-                    Bookmarks = new List<Bookmark>(),
-                    Id = Guid.NewGuid().ToString(),
-                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
-                    EventType = "Public",
-                    EventDateTo = new DateTime(2018,12,28,16,0,0),
-                    EventStatus = "Published",
-                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
-                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
-                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
-                    IsFeatured = false,
-                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
-                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
-                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
-                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
-                    SurveyUrl = null,
-                    SurveyResultUrl = null
-                }, //twins
-                new Event(){
-                    Discriminator = "Event",
-                        Members = new List<EventMember>(),
-                    Bookmarks = new List<Bookmark>(),
-                    Id = Guid.NewGuid().ToString(),
-                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
-                    EventType = "Public",
-                    EventDateTo = new DateTime(2018,12,28,16,0,0),
-                    EventStatus = "Published",
-                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
-                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
-                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
-                    IsFeatured = false,
-                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
-                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
-                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
-                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
-                    SurveyUrl = null,
-                    SurveyResultUrl = null
-                }, //twins
-                new Event(){
-                    Discriminator = "Event",
-                        Members = new List<EventMember>(),
-                    Bookmarks = new List<Bookmark>(),
-                    Id = Guid.NewGuid().ToString(),
-                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
-                    EventType = "Public",
-                    EventDateTo = new DateTime(2018,12,28,16,0,0),
-                    EventStatus = "Published",
-                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
-                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
-                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
-                    IsFeatured = false,
-                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
-                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
-                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
-                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
-                    SurveyUrl = null,
-                    SurveyResultUrl = null
-                }, //twins
-                new Event(){
-                    Discriminator = "Event",
-                        Members = new List<EventMember>(),
-                    Bookmarks = new List<Bookmark>(),
-                    Id = Guid.NewGuid().ToString(),
-                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
-                    EventType = "Public",
-                    EventDateTo = new DateTime(2018,12,28,16,0,0),
-                    EventStatus = "Published",
-                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
-                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
-                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
-                    IsFeatured = false,
-                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
-                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
-                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
-                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
-                    SurveyUrl = null,
-                    SurveyResultUrl = null
-                }, //twins
-                new Event(){
-                    Discriminator = "Event",
-                        Members = new List<EventMember>(),
-                    Bookmarks = new List<Bookmark>(),
-                    Id = Guid.NewGuid().ToString(),
-                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
-                    EventType = "Public",
-                    EventDateTo = new DateTime(2018,12,28,16,0,0),
-                    EventStatus = "Published",
-                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
-                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
-                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
-                    IsFeatured = false,
-                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
-                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
-                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
-                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
-                    SurveyUrl = null,
-                    SurveyResultUrl = null
-                }, //twins
-                new Event(){
-                    Discriminator = "Event",
-                        Members = new List<EventMember>(),
-                    Bookmarks = new List<Bookmark>(),
-                    Id = Guid.NewGuid().ToString(),
-                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
-                    EventType = "Public",
-                    EventDateTo = new DateTime(2018,12,28,16,0,0),
-                    EventStatus = "Published",
-                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
-                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
-                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
-                    IsFeatured = false,
-                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
-                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
-                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
-                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
-                    SurveyUrl = null,
-                    SurveyResultUrl = null
-                }, //twins
-                new Event(){
-                    Discriminator = "Event",
-                        Members = new List<EventMember>(),
-                    Bookmarks = new List<Bookmark>(),
-                    Id = Guid.NewGuid().ToString(),
-                    EventName = "PETRONAS ICT Core Academy Foundation for Executives",
-                    EventType = "Public",
-                    EventDateTo = new DateTime(2018,12,28,16,0,0),
-                    EventStatus = "Published",
-                    EventDateFrom = new DateTime(2018,12,23,8,30,0),
-                    EventImageUrl = "https://fileservice.petronas.com/api/v1/view/image/112ee790-5610-4a62-8c6f-cf6d5b543238-ffe-14-nov-1280x720.png",
-                    EventDescription = "<p>The PETRONAS ICT Core Academy: Foundation for Executives programme is our very own in-house academy which aims to provide common trainings across the organization to increase the levels of business knowledge. This is a great opportunity for you to network with your colleagues from other divisions.</p>",
-                    IsFeatured = false,
-                    VenueId = Venues.Skip(14).Take(1).FirstOrDefault().Id,
-                    LocationId = Locations.Skip(2).Take(1).FirstOrDefault().Id,
-                    Venue = Venues.Skip(14).Take(1).FirstOrDefault(),
-                    Location = Locations.Skip(2).Take(1).FirstOrDefault(),
-                    SurveyUrl = null,
-                    SurveyResultUrl = null
-                }, //twins
-                new Event(){
-                    Discriminator = "Event",
-                        Members = new List<EventMember>(),
-                    Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "PETRONAS ICT Core Academy Foundation for Executives",
                     EventType = "Public",
@@ -566,6 +616,8 @@ namespace com.petronas.myevents.api.Migrations
                     Discriminator = "Event",
                         Members = new List<EventMember>(),
                     Bookmarks = new List<Bookmark>(),
+                    Medias= new List<Media>(),
+                    Spotlights = new List<Spotlight>(),
                     Id = Guid.NewGuid().ToString(),
                     EventName = "In It 2 Win It Session 1",
                     EventType = "Public",
@@ -601,19 +653,35 @@ namespace com.petronas.myevents.api.Migrations
                 new SubSession(){ SessionId = Sessions.Skip(0).Take(1).FirstOrDefault().Id, AgendaName = "Autograph Session", Venue = Venues.Skip(2).Take(1).FirstOrDefault(), VenueId = Venues.Skip(2).Take(1).FirstOrDefault().Id, TimeFrom ="11:00", TimeTo="11:30", Discriminator = "SubSession", Id = Guid.NewGuid().ToString() },
                 new SubSession(){ SessionId = Sessions.Skip(0).Take(1).FirstOrDefault().Id, AgendaName = "Truck Tour", Venue = Venues.Skip(2).Take(1).FirstOrDefault(), VenueId = Venues.Skip(2).Take(1).FirstOrDefault().Id, TimeFrom ="14:00", TimeTo="15:00", Discriminator = "SubSession", Id = Guid.NewGuid().ToString() },
                 new SubSession(){ SessionId = Sessions.Skip(0).Take(1).FirstOrDefault().Id, AgendaName = "Pit Lane Walk", Venue = Venues.Skip(3).Take(1).FirstOrDefault(), VenueId = Venues.Skip(3).Take(1).FirstOrDefault().Id, TimeFrom ="17:00", TimeTo="18:00", Discriminator = "SubSession", Id = Guid.NewGuid().ToString() },
-																						   
-              //f1 2																	  
+                                                                                           
+              //f1 2                                                                      
                 new SubSession(){ SessionId = Sessions.Skip(1).Take(1).FirstOrDefault().Id, AgendaName = "F1 Drivers Arrival", Venue = Venues.Skip(2).Take(1).FirstOrDefault(),  VenueId = Venues.Skip(2).Take(1).FirstOrDefault().Id, TimeFrom ="09:00", TimeTo="10:00", Discriminator = "SubSession", Id = Guid.NewGuid().ToString() },
                 new SubSession(){ SessionId = Sessions.Skip(1).Take(1).FirstOrDefault().Id, AgendaName = "Team Pit Stop Practice", Venue = Venues.Skip(2).Take(1).FirstOrDefault(), VenueId = Venues.Skip(2).Take(1).FirstOrDefault().Id, TimeFrom ="10:00", TimeTo="10:30", Discriminator = "SubSession", Id = Guid.NewGuid().ToString() },
                 new SubSession(){ SessionId = Sessions.Skip(1).Take(1).FirstOrDefault().Id, AgendaName = "Practice 3", Venue = Venues.Skip(2).Take(1).FirstOrDefault(), VenueId = Venues.Skip(2).Take(1).FirstOrDefault().Id, TimeFrom ="14:00", TimeTo="15:00", Discriminator = "SubSession", Id = Guid.NewGuid().ToString() },
                 new SubSession(){ SessionId = Sessions.Skip(1).Take(1).FirstOrDefault().Id, AgendaName = "Qualifying 1", Venue = Venues.Skip(2).Take(1).FirstOrDefault(), VenueId = Venues.Skip(2).Take(1).FirstOrDefault().Id, TimeFrom ="17:00", TimeTo="18:00", Discriminator = "SubSession", Id = Guid.NewGuid().ToString() },
-																						   
-              //hse 1																	 
+                                                                                           
+              //hse 1                                                                    
                 new SubSession(){ SessionId = Sessions.Skip(2).Take(1).FirstOrDefault().Id, AgendaName = "Arrival of Participants", Venue = Venues.Skip(15).Take(1).FirstOrDefault(), VenueId = Venues.Skip(15).Take(1).FirstOrDefault().Id, TimeFrom ="14:00", TimeTo="19:00", Discriminator = "SubSession", Id = Guid.NewGuid().ToString() },
                 new SubSession(){ SessionId = Sessions.Skip(2).Take(1).FirstOrDefault().Id, AgendaName = "Ice Breaking Dinner", Venue = Venues.Skip(16).Take(1).FirstOrDefault(), VenueId = Venues.Skip(16).Take(1).FirstOrDefault().Id, TimeFrom ="18:30", TimeTo="19:45", Discriminator = "SubSession", Id = Guid.NewGuid().ToString() },
                 new SubSession(){ SessionId = Sessions.Skip(2).Take(1).FirstOrDefault().Id, AgendaName = "Context Setting", Venue = Venues.Skip(16).Take(1).FirstOrDefault(), VenueId = Venues.Skip(16).Take(1).FirstOrDefault().Id, TimeFrom ="20:00", TimeTo="22:00", Discriminator = "SubSession", Id = Guid.NewGuid().ToString() },
                 new SubSession(){ SessionId = Sessions.Skip(2).Take(1).FirstOrDefault().Id, AgendaName = "Supper & Networking", Venue = Venues.Skip(17).Take(1).FirstOrDefault(), VenueId = Venues.Skip(17).Take(1).FirstOrDefault().Id, TimeFrom ="22:00", TimeTo="22:30", Discriminator = "SubSession", Id = Guid.NewGuid().ToString() }
             };
+
+            //add subsession to session
+            Sessions.Skip(0).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(0).Take(1).FirstOrDefault());
+            Sessions.Skip(0).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(1).Take(1).FirstOrDefault());
+            Sessions.Skip(0).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(2).Take(1).FirstOrDefault());
+            Sessions.Skip(0).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(3).Take(1).FirstOrDefault());
+
+            Sessions.Skip(1).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(4).Take(1).FirstOrDefault());
+            Sessions.Skip(1).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(5).Take(1).FirstOrDefault());
+            Sessions.Skip(1).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(6).Take(1).FirstOrDefault());
+            Sessions.Skip(1).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(7).Take(1).FirstOrDefault());
+
+            Sessions.Skip(2).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(8).Take(1).FirstOrDefault());
+            Sessions.Skip(2).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(9).Take(1).FirstOrDefault());
+            Sessions.Skip(2).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(10).Take(1).FirstOrDefault());
+            Sessions.Skip(2).Take(1).FirstOrDefault().SubSessions.Add(SubSessions.Skip(11).Take(1).FirstOrDefault());
             #endregion
 
             #region bookmark
@@ -623,7 +691,12 @@ namespace com.petronas.myevents.api.Migrations
                 new Bookmark(){ UserId = Users.FirstOrDefault().Id, EventId = Events.Skip(6).Take(1).FirstOrDefault().Id, Discriminator = "Bookmark", Id = Guid.NewGuid().ToString() },
                 new Bookmark(){ UserId = Users.FirstOrDefault().Id, EventId = Events.Skip(5).Take(1).FirstOrDefault().Id, Discriminator = "Bookmark", Id = Guid.NewGuid().ToString() }
             };
-           #endregion
+
+            Events.Skip(1).Take(1).FirstOrDefault().Bookmarks.Add(Bookmarks.Skip(0).Take(1).FirstOrDefault());
+            Events.Skip(2).Take(1).FirstOrDefault().Bookmarks.Add(Bookmarks.Skip(1).Take(1).FirstOrDefault());
+            Events.Skip(6).Take(1).FirstOrDefault().Bookmarks.Add(Bookmarks.Skip(2).Take(1).FirstOrDefault());
+            Events.Skip(5).Take(1).FirstOrDefault().Bookmarks.Add(Bookmarks.Skip(3).Take(1).FirstOrDefault());
+            #endregion
 
             #region member
             var Members = new List<EventMember>(){
@@ -649,7 +722,30 @@ namespace com.petronas.myevents.api.Migrations
                                     new EventMember(){ UserId = Users.FirstOrDefault().Id, EventId = Events.Skip(22).Take(1).FirstOrDefault().Id, EventMemberStatus = "JOINED", Discriminator = "EventMember", Id = Guid.NewGuid().ToString() }
 
             };
-            
+            Sessions.Skip(0).Take(1).FirstOrDefault().Members.Add(Members.Skip(3).Take(1).FirstOrDefault());
+
+            Events.Skip(0).Take(1).FirstOrDefault().Members.Add(Members.Skip(0).Take(1).FirstOrDefault());
+            Events.Skip(1).Take(1).FirstOrDefault().Members.Add(Members.Skip(1).Take(1).FirstOrDefault());
+            Events.Skip(2).Take(1).FirstOrDefault().Members.Add(Members.Skip(2).Take(1).FirstOrDefault());
+
+            Events.Skip(6).Take(1).FirstOrDefault().Members.Add(Members.Skip(4).Take(1).FirstOrDefault());
+            Events.Skip(8).Take(1).FirstOrDefault().Members.Add(Members.Skip(5).Take(1).FirstOrDefault());
+            Events.Skip(9).Take(1).FirstOrDefault().Members.Add(Members.Skip(6).Take(1).FirstOrDefault());
+            Events.Skip(10).Take(1).FirstOrDefault().Members.Add(Members.Skip(7).Take(1).FirstOrDefault());
+            Events.Skip(11).Take(1).FirstOrDefault().Members.Add(Members.Skip(8).Take(1).FirstOrDefault());
+            Events.Skip(12).Take(1).FirstOrDefault().Members.Add(Members.Skip(9).Take(1).FirstOrDefault());
+            Events.Skip(13).Take(1).FirstOrDefault().Members.Add(Members.Skip(10).Take(1).FirstOrDefault());
+            Events.Skip(14).Take(1).FirstOrDefault().Members.Add(Members.Skip(11).Take(1).FirstOrDefault());
+            Events.Skip(15).Take(1).FirstOrDefault().Members.Add(Members.Skip(12).Take(1).FirstOrDefault());
+            Events.Skip(16).Take(1).FirstOrDefault().Members.Add(Members.Skip(13).Take(1).FirstOrDefault());
+            Events.Skip(17).Take(1).FirstOrDefault().Members.Add(Members.Skip(14).Take(1).FirstOrDefault());
+            Events.Skip(18).Take(1).FirstOrDefault().Members.Add(Members.Skip(15).Take(1).FirstOrDefault());
+            Events.Skip(19).Take(1).FirstOrDefault().Members.Add(Members.Skip(16).Take(1).FirstOrDefault());
+            Events.Skip(20).Take(1).FirstOrDefault().Members.Add(Members.Skip(17).Take(1).FirstOrDefault());
+            Events.Skip(21).Take(1).FirstOrDefault().Members.Add(Members.Skip(18).Take(1).FirstOrDefault());
+            Events.Skip(22).Take(1).FirstOrDefault().Members.Add(Members.Skip(19).Take(1).FirstOrDefault());
+
+
             #endregion
 
             #region spotlight
@@ -657,8 +753,7 @@ namespace com.petronas.myevents.api.Migrations
 
             foreach (var item in Events)
             {
-                var random = new Random().Next(1,6);
-                Spotlights.AddRange(SeedingHelpers.GetSpotlights(item).OrderBy(x=>Guid.NewGuid()).Take(random));
+                SeedingHelpers.GetSpotlights(item.Spotlights, item);
             }
 
             #endregion
@@ -668,8 +763,7 @@ namespace com.petronas.myevents.api.Migrations
 
             foreach (var item in Events)
             {
-                var random = new Random().Next(1,6);
-                Medias.AddRange(SeedingHelpers.GetMedias(item).OrderBy(x=>Guid.NewGuid()).Take(random));
+                SeedingHelpers.GetMedias(item.Medias, item);
             }
 
             #endregion
@@ -726,43 +820,44 @@ namespace com.petronas.myevents.api.Migrations
                 }
             }
 
-            if (!CheckExist(CollectionNameConstant.COLLECTION_MEDIA))
-            {
+            //if (!CheckExist(CollectionNameConstant.COLLECTION_BOOKMARK))
+            //{
 
-                foreach (var item in Medias)
-                {
-                    _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_MEDIA), item).Wait();
-                }
-            }
-            
+            //    foreach (var item in Bookmarks)
+            //    {
+            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_BOOKMARK), item).Wait();
+            //    }
+            //}
 
-            if (!CheckExist(CollectionNameConstant.COLLECTION_BOOKMARK))
-            {
+            //if (!CheckExist(CollectionNameConstant.COLLECTION_EVENT_MEMBER))
+            //{
 
-                foreach (var item in Bookmarks)
-                {
-                    _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_BOOKMARK), item).Wait();
-                }
-            }
+            //    foreach (var item in Members)
+            //    {
+            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_EVENT_MEMBER), item).Wait();
+            //    }
+            //}
 
-            if (!CheckExist(CollectionNameConstant.COLLECTION_SPOTLIGHT))
-            {
+            //if (!CheckExist(CollectionNameConstant.COLLECTION_SPOTLIGHT))
+            //{
 
-                foreach (var item in Spotlights)
-                {
-                    _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_SPOTLIGHT), item).Wait();
-                }
-            }
+            //    foreach (var item in Spotlights)
+            //    {
+            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_SPOTLIGHT), item).Wait();
+            //    }
+            //}
 
-            if (!CheckExist(CollectionNameConstant.COLLECTION_EVENT_MEMBER))
-            {
+            //if (!CheckExist(CollectionNameConstant.COLLECTION_MEDIA))
+            //{
 
-                foreach (var item in Members)
-                {
-                    _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_EVENT_MEMBER), item).Wait();
-                }
-            }
+            //    foreach (var item in Medias)
+            //    {
+            //        _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_options.DatabaseId, CollectionNameConstant.COLLECTION_MEDIA), item).Wait();
+            //    }
+            //}
             #endregion
+
+
 
 
         }
@@ -774,9 +869,8 @@ namespace com.petronas.myevents.api.Migrations
 
     public static class SeedingHelpers
     {
-        public static List<Spotlight> GetSpotlights(Event _event)
+        public static void GetSpotlights(List<Spotlight> list, Event _event)
         {
-            var list = new List<Spotlight>();
             list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Lewis Hamilton", SpotlightDescription = "F1 Driver", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/ddb20aa4-4d29-4a43-8c05-fb174d8d9eb6-1-440px-lewis-hamilton-2016-malaysia-2.jpg" });
             list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Kimi Räikkönen", SpotlightDescription = "F1 Driver", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/349630b9-2ebd-4b18-b5f8-5628c2f2f704-1-rai-at-2017-russian-grand-prix-podium-cropped.jpg" });
             list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Fernando Alonso", SpotlightDescription = "F1 Driver", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/a16b6151-ce40-4a40-962b-e6061ecea52e-1-alonso-2016.jpg" });
@@ -787,12 +881,10 @@ namespace com.petronas.myevents.api.Migrations
             list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Bill Gates", SpotlightDescription = "Microsoft CEO", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/2b71b121-ff49-4851-b996-14b3f9e11842-1-440px-bill-gates-2018.jpg" });
             list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Warren Buffett", SpotlightDescription = "Berkshire Hathaway CEO", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/b09f08b8-6aed-47d7-8365-f509a7525799-1-440px-warren-buffett-ku-visit.jpg" });
             list.Add(new Spotlight() { EventId = _event.Id, Discriminator = "Spotlight", Id = Guid.NewGuid().ToString(), SpotlightTitle = "Larry Page", SpotlightDescription = "Google CEO", ImageUrl = "https://stagingfileservice.petronas.com/api/v2/r/p/ccb3ce26-af6f-42e9-a9e4-4d009f29a7bc/e0c48375-1e5f-4c56-9e3f-bd5c111afa75-1-440px-larry-page-in-the-european-parliament-1.jpg" });
-            return list;
-        }
-        public static List<Media> GetMedias(Event _event)
-        {
-            var list = new List<Media>();
 
+        }
+        public static void GetMedias(List<Media> list, Event _event)
+        {
             list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Cartoon 1.mp4", EventId = _event.Id, MediaType = "Video", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/stream/video/6af05ae2-58b7-4653-9bb6-7b0ae4f2316b-25-an-private-event-1-20180425092949874-b9bb9-web-compressed.mp4", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/6af05ae2-58b7-4653-9bb6-7b0ae4f2316b-25-an-private-event-1-20180425092949874-b9bb9-thumbnail.jpg" });
             list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Introduction.mp4", EventId = _event.Id, MediaType = "Video", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/stream/video/74fa0d89-0b37-4c58-baaf-a0c7910686bd-25-an-private-event-1-20180425092958046-downl-web-compressed.mp4", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/74fa0d89-0b37-4c58-baaf-a0c7910686bd-25-an-private-event-1-20180425092958046-downl-thumbnail.jpg" });
 
@@ -803,7 +895,6 @@ namespace com.petronas.myevents.api.Migrations
             list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Race.xlsx", EventId = _event.Id, MediaType = "Document", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/get/file/a7e2ab8b-3673-456e-8101-5b7622ddce42-25-an-private-event-1-20180830034858258-xlsx-.xlsx", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/xls.png" });
             list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Sepang map 1.pdf", EventId = _event.Id, MediaType = "Document", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/get/file/a7f16f0b-de84-4f72-bf84-4fc97d7d20d4-25-an-private-event-1-20180425093539437-pathw.pdf", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/pdf.png" });
             list.Add(new Media() { CreateDate = DateTime.UtcNow, FileName = "Sepang map 2.pdf", EventId = _event.Id, MediaType = "Document", Discriminator = "Media", Id = Guid.NewGuid().ToString(), Url = "https://fileservice.petronas.com/api/v1/get/file/e813b0ad-4c91-426c-ac42-d1c6e5063b30-25-an-private-event-1-20180425093529062-opm13.pdf", ThumbUrl = "https://fileservice.petronas.com/api/v1/view/image/pdf.png" });
-            return list;
         }
 
 

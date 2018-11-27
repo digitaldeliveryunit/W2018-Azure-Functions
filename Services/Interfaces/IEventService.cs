@@ -9,13 +9,13 @@ namespace com.petronas.myevents.api.Services.Interfaces
 {
     public interface IEventService
     {
-        EventResponse GetById(string id);
-        IEnumerable<EventResponse> GetUpcomingAllEvents(int skip, int take);
-        IEnumerable<EventResponse> GetUpcomingEvents(int skip, int take);
-        EventListViewModel GetFeaturedEvents(string continuationKey, int take, string searchKey, string userId);
-        IEnumerable<EventResponse> GetPastEvents(int skip, int take);
+        EventResponse GetById(string id, string userId);
+        EventListViewModel GetUpcomingAllEvents(string continuationKey, int take, string userId);
+        EventListViewModel GetUpcomingEvents(string continuationKey, int take, string userId);
+        EventListViewModel GetFeaturedEvents(string continuationKey, int take, string userId);
+        EventListViewModel GetPastEvents(string continuationKey, int take, string userId);
         Task<bool> UnBookmark(string eventId, string userId);
         Task<bool> Bookmark(string eventId, string userId);
-        IEnumerable<EventResponse> Search(string searchKey, int skip, int take);
+        EventListViewModel Search(string searchKey, string continuationKey, int take, string userId);
     }
 }

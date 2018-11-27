@@ -114,5 +114,30 @@ namespace com.petronas.myevents.api.Repositories
             client.OpenAsync().GetAwaiter().GetResult();
             return client;
         }
+
+        public IEnumerable<T> GetBatch(SqlQuerySpec sqlExpression, FeedOptions feedOptions, out string continuationKey)
+        {
+            if (feedOptions == null)
+            {
+                feedOptions = new FeedOptions
+                {
+                    MaxItemCount = -1,
+                    EnableCrossPartitionQuery = true,
+                    EnableScanInQuery = true
+                };
+            }
+            else
+            {
+                feedOptions.EnableScanInQuery = true;
+            }
+            var result = _client.CreateDocumentQuery<T>(_collectionUri, sqlExpression, feedOptions);
+            // if (orderBy != null)
+            // {
+            //     result = orderBy(result);
+            // }
+            var r = result.AsDocumentQuery().ExecuteNextAsync<T>().GetAwaiter().GetResult();
+            continuationKey = r.ResponseContinuation;
+            return r.AsEnumerable();
+        }
     }
 }

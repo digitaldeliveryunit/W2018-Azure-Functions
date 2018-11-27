@@ -360,6 +360,8 @@ namespace com.petronas.myevents.api.Constants
         public static readonly string EmailAddressInvalidFormatErrorCode = "118";
         public static readonly string EmailAddressInvalidFormatErrorMessage = "Email Address in invalid format.";
 
+        public static readonly string GetEventsError = "119";
+        public static readonly string GetEventsMessage = "Error occured in GetEvents";
 
         public static readonly string UnAuthenticatedUserMessage = "User is not Authenicated";
         public static readonly string AccessDeniedMessage = "Access denied.Please contact the event organizer.";
@@ -373,6 +375,6 @@ namespace com.petronas.myevents.api.Constants
         //internal static readonly DateTime PostEventJoinError;
         internal static string GetFeaturedEventsMessage = "";
 
-        public static DateTime GetFeaturedEventsError { get; internal set; }
+        public static int GetFeaturedEventsError { get; internal set; }
     }
 }
