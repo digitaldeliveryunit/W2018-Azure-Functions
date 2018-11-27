@@ -13,12 +13,13 @@ namespace com.petronas.myevents.api.Helpers
     {
         private readonly CloudQueue _queue;
 
-        public QueueService(string queueName)
+        public QueueService()
         {
             var _storageAccount = CloudStorageAccount.Parse(
                 Environment.GetEnvironmentVariable(AppSettings.StorageConnectionString));
             var _queueClient = _storageAccount.CreateCloudQueueClient();
-            _queue = _queueClient.GetQueueReference(queueName);
+            _queue = _queueClient.GetQueueReference(Environment.GetEnvironmentVariable(AppSettings.QueueName));
+            _queue.CreateIfNotExistsAsync();
         }
 
         public void Insert(QueueMessage queueMessage){

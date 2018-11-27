@@ -30,9 +30,8 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            var continuation = string.Empty;
-            var isBookmark = _eventRepository.GetBatch(x => !x.IsDeleted && x.Id == eventId, feedOptions, out continuation, null).FirstOrDefault().Bookmarks.Any(x => !x.IsDeleted && x.UserId == userId);
-            if (!isBookmark)
+            var _event = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList().FirstOrDefault();
+            if (!_event.Bookmarks.Any(x => !x.IsDeleted && x.UserId == userId))
             {
                 var bookmark = new Bookmark()
                 {
@@ -40,10 +39,8 @@ namespace com.petronas.myevents.api.Services
                     UserId = userId,
                     Id = Guid.NewGuid().ToString(),
                 };
-
-                var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.Id == eventId, feedOptions, out continuation, null).FirstOrDefault();
-                ev.Bookmarks.Add(bookmark);
-                await _eventRepository.Update(ev);
+                _event.Bookmarks.Add(bookmark);
+                await _eventRepository.Update(_event);
             }
             return true;
         }
@@ -55,14 +52,12 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            var continuation = string.Empty;
-            var bookmarks = _eventRepository.GetBatch(x => !x.IsDeleted && x.Id == eventId, feedOptions, out continuation, null).FirstOrDefault().Bookmarks.Where(x => !x.IsDeleted && x.UserId == userId).ToList();
-            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
-            foreach (var item in bookmarks)
+            var _event = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList().FirstOrDefault();
+            for (var i = 0; i < _event.Bookmarks.Count; i++)
             {
-                ev.Bookmarks.Remove(ev.Bookmarks.FirstOrDefault(x => x.Id == item.Id));
+                _event.Bookmarks.Remove(_event.Bookmarks.FirstOrDefault(x => x.Id == _event.Bookmarks[i].Id));
             }
-            await _eventRepository.Update(ev);
+            await _eventRepository.Update(_event);
             return true;
         }
 

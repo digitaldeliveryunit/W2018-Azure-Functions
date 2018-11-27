@@ -1,7 +1,7 @@
 ﻿  using System;
   using com.petronas.myevents.api.Constants;
-using com.petronas.myevents.api.RequestContracts;
-using com.petronas.myevents.api.Services.Interfaces;
+  using com.petronas.myevents.api.RequestContracts;
+  using com.petronas.myevents.api.Services.Interfaces;
   using com.petronas.myevents.api.ViewModels;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
@@ -10,6 +10,7 @@ using com.petronas.myevents.api.Services.Interfaces;
   using Microsoft.Extensions.Logging;
   using Newtonsoft.Json;
   using Willezone.Azure.WebJobs.Extensions.DependencyInjection;
+  using com.petronas.myevents.api.Helpers;
 
   namespace com.petronas.myevents.api.Functions
   {
@@ -164,32 +165,136 @@ using com.petronas.myevents.api.Services.Interfaces;
             }
         }
 
-        //[FunctionName("Bookmark")]
-        //public static IActionResult AAA(
-        //      [HttpTrigger(
-        //          AuthorizationLevel.Anonymous,
-        //        RequestMethods.Post,
-        //        Route = "Event/{*eventId}/Bookmark")]HttpRequest request,
-        //          string eventId,
-        //          string functionType,
-        //      ILogger log,
-        //    [Inject]IEventService eventService, [Inject]IEventAgendaService agendaService, [Inject]IEventSpotlightService spotlightService)
-        //{
-        //    try
-        //    {
-        //        switch (request.Method)
-        //        {
-        //            case RequestMethods.Post:
+        [FunctionName("Bookmark")]
+        public static IActionResult Bookmark(
+             [HttpTrigger(
+                 AuthorizationLevel.Anonymous,
+               RequestMethods.Get,
+               Route = "Bookmark/{*eventId}")]HttpRequest request,
+                 string eventId,
+             ILogger log,
+           [Inject]IEventService eventService, [Inject]QueueService queueService)
+        {
+           try
+           {
+               switch (request.Method)
+               {
+                   case RequestMethods.Get:
+                        var message = new QueueMessage(){
+                         QueueType = QueueType.BOOKMARK.ToString(),
+                         EventId = eventId,
+                         UserId = DefaultValue.UserId
+                        };
+                        queueService.Insert(message);
+                        return new OkResult();
+                   default:
+                       return new BadRequestResult();
+               }
+           }
+           catch (Exception ex)
+           {
+               log.LogError(ex.Message, ex);
+               return new BadRequestObjectResult(null);
+           }
+        }
 
-        //            default:
-        //                return new BadRequestResult();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        log.LogError(ex.Message, ex);
-        //        return new BadRequestObjectResult(null);
-        //    }
-        //}
+        [FunctionName("UnBookmark")]
+        public static IActionResult UnBookmark(
+             [HttpTrigger(
+                 AuthorizationLevel.Anonymous,
+               RequestMethods.Get,
+               Route = "UnBookmark/{*eventId}")]HttpRequest request,
+                 string eventId,
+             ILogger log,
+           [Inject]IEventService eventService, [Inject]QueueService queueService)
+        {
+           try
+           {
+               switch (request.Method)
+               {
+                   case RequestMethods.Get:
+                        var message = new QueueMessage(){
+                         QueueType = QueueType.UNBOOKMARK.ToString(),
+                         EventId = eventId,
+                         UserId = DefaultValue.UserId
+                        };
+                        queueService.Insert(message);
+                        return new OkResult();
+                   default:
+                       return new BadRequestResult();
+               }
+           }
+           catch (Exception ex)
+           {
+               log.LogError(ex.Message, ex);
+               return new BadRequestObjectResult(null);
+           }
+        }
+
+        [FunctionName("Join")]
+        public static IActionResult Join(
+             [HttpTrigger(
+                 AuthorizationLevel.Anonymous,
+               RequestMethods.Get,
+               Route = "Join/{*eventId}")]HttpRequest request,
+                 string eventId,
+             ILogger log,
+           [Inject]IEventService eventService, [Inject]QueueService queueService)
+        {
+           try
+           {
+               switch (request.Method)
+               {
+                   case RequestMethods.Get:
+                        var message = new QueueMessage(){
+                         QueueType = QueueType.JOIN.ToString(),
+                         EventId = eventId,
+                         UserId = DefaultValue.UserId
+                        };
+                        queueService.Insert(message);
+                        return new OkResult();
+                   default:
+                       return new BadRequestResult();
+               }
+           }
+           catch (Exception ex)
+           {
+               log.LogError(ex.Message, ex);
+               return new BadRequestObjectResult(null);
+           }
+        }
+
+        [FunctionName("UnJoin")]
+        public static IActionResult UnJoin(
+             [HttpTrigger(
+                 AuthorizationLevel.Anonymous,
+               RequestMethods.Get,
+               Route = "UnJoin/{*eventId}")]HttpRequest request,
+                 string eventId,
+             ILogger log,
+           [Inject]IEventService eventService, [Inject]QueueService queueService)
+        {
+           try
+           {
+               switch (request.Method)
+               {
+                   case RequestMethods.Get:
+                        var message = new QueueMessage(){
+                         QueueType = QueueType.UN_JOIN.ToString(),
+                         EventId = eventId,
+                         UserId = DefaultValue.UserId
+                        };
+                        queueService.Insert(message);
+                        return new OkResult();
+                   default:
+                       return new BadRequestResult();
+               }
+           }
+           catch (Exception ex)
+           {
+               log.LogError(ex.Message, ex);
+               return new BadRequestObjectResult(null);
+           }
+        }
     }
   }

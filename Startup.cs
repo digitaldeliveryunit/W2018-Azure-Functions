@@ -10,6 +10,7 @@ using com.petronas.myevents.api.Repositories;
 using com.petronas.myevents.api.Services.Interfaces;
 using com.petronas.myevents.api.Services;
 using com.petronas.myevents.api.Migrations;
+using com.petronas.myevents.api.Helpers;
 
 [assembly: WebJobsStartup(typeof(Startup))]
 namespace com.petronas.myevents.api
@@ -56,6 +57,7 @@ namespace com.petronas.myevents.api
                 services.AddScoped<IEventMediaService, EventMediaService>();
                 services.AddScoped<IUserService, UserService>();
                 services.AddScoped<IEventMemberService, EventMemberService>();
+                services.AddScoped<QueueService,QueueService>();
                 new InitDbAndData().InitDbAndDataSeending();
                 return services.BuildServiceProvider(true);
                 

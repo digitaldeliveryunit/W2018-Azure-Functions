@@ -15,10 +15,10 @@ namespace com.petronas.myevents.api.Functions.Queues
         [FunctionName("EventQueueFunction")]
         public static async Task Run(
             [QueueTrigger(
-                QueueNames.Events,
+                "myeventsworkshopqueue",
                 Connection = AppSettings.StorageConnectionString)]string queueMessage,
             ILogger log,
-            [Inject]IEventService eventService)
+            [Inject]IEventService eventService, [Inject]IEventMemberService memberService)
         {
             var message = JsonConvert.DeserializeObject<QueueMessage>(queueMessage);
             var queueType = Enum.Parse(typeof(QueueType), message.QueueType);
@@ -33,10 +33,10 @@ namespace com.petronas.myevents.api.Functions.Queues
                         await eventService.UnBookmark(message.EventId, message.UserId);
                         break;
                     case QueueType.JOIN:
-                        // await eventService.Join(message.EventId, message.UserId);
+                        await memberService.Join(message.EventId, message.UserId);
                         break;
                     case QueueType.UN_JOIN:
-                        // await eventService.UnJoin(message.EventId, message.UserId);
+                        await memberService.UnJoin(message.EventId, message.UserId);
                         break;
                 }
             }
