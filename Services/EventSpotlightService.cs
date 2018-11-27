@@ -30,7 +30,8 @@ namespace com.petronas.myevents.api.Services
                 return spotlightList.Select(f => new EventSpotlightResponse
                 {
                     SpotlightId = f.Id,
-                    SpotlightName = f.SpotlightTitle,
+                    SpotlightName = f.SpotlightName,
+                    SpotlightTitle = f.SpotlightTitle,
                     Description = f.SpotlightDescription,
                     ImageUrl = f.ImageUrl
                 });

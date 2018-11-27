@@ -69,7 +69,7 @@
         public static IActionResult GetSpotlights(
               [HttpTrigger(
                   AuthorizationLevel.Anonymous,
-                  RequestMethods.Post,
+                  RequestMethods.Get,
                 Route = "Spotlight/{*eventId}")]HttpRequest request,
                   string eventId,
               ILogger log,

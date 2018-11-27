@@ -8,6 +8,7 @@ namespace com.petronas.myevents.api.ViewModels
     {
         public string SpotlightId { get; set; }
         public string SpotlightName { get; set; }
+        public string SpotlightTitle { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; }
     }
