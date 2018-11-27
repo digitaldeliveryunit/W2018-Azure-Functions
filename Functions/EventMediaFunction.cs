@@ -56,7 +56,7 @@ namespace com.petronas.myevents.api.Functions
                             return new NotFoundObjectResult(errorMessage);
                         }
 
-                        var media = eventMediaService.GetMedias(id, "Video", query.Skip, query.Take);
+                        var media = eventMediaService.GetMedias(id, type, query.Skip, query.Take);
                         return new OkObjectResult(media);
                     default:
                         return new BadRequestResult();

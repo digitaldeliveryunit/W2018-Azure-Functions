@@ -186,15 +186,15 @@
                          UserId = DefaultValue.UserId
                         };
                         queueService.Insert(message);
-                        return new OkResult();
+                        return new OkObjectResult(true);
                    default:
-                       return new BadRequestResult();
+                       return new BadRequestObjectResult(false);
                }
            }
            catch (Exception ex)
            {
                log.LogError(ex.Message, ex);
-               return new BadRequestObjectResult(null);
+               return new BadRequestObjectResult(false);
            }
         }
 
@@ -219,15 +219,15 @@
                          UserId = DefaultValue.UserId
                         };
                         queueService.Insert(message);
-                        return new OkResult();
+                        return new OkObjectResult(true);
                    default:
-                       return new BadRequestResult();
+                       return new BadRequestObjectResult(false);
                }
            }
            catch (Exception ex)
            {
                log.LogError(ex.Message, ex);
-               return new BadRequestObjectResult(null);
+               return new BadRequestObjectResult(false);
            }
         }
 
@@ -252,15 +252,15 @@
                          UserId = DefaultValue.UserId
                         };
                         queueService.Insert(message);
-                        return new OkResult();
+                        return new OkObjectResult(true);
                    default:
-                       return new BadRequestResult();
+                       return new BadRequestObjectResult(false);
                }
            }
            catch (Exception ex)
            {
                log.LogError(ex.Message, ex);
-               return new BadRequestObjectResult(null);
+               return new BadRequestObjectResult(false);
            }
         }
 
@@ -285,15 +285,15 @@
                          UserId = DefaultValue.UserId
                         };
                         queueService.Insert(message);
-                        return new OkResult();
+                        return new OkObjectResult(true);
                    default:
-                       return new BadRequestResult();
+                       return new BadRequestObjectResult(false);
                }
            }
            catch (Exception ex)
            {
                log.LogError(ex.Message, ex);
-               return new BadRequestObjectResult(null);
+               return new BadRequestObjectResult(false);
            }
         }
     }
