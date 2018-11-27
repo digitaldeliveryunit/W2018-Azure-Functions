@@ -366,6 +366,8 @@ namespace com.petronas.myevents.api.Constants
         public static readonly string UnAuthenticatedUserMessage = "User is not Authenicated";
         public static readonly string AccessDeniedMessage = "Access denied.Please contact the event organizer.";
         public static readonly string AuthenticationCredentialsInvalidMessage = "Authentication credentials were missing or incorrect";
+         internal static readonly string GetUserProfileError = "";
+        internal static readonly string GetUserProfileMessage = "";
         internal static readonly string GetAllUpcomingEventsError = "";
         internal static readonly string GetAllUpcomingEventsMessage = "";
         internal static readonly string GetUpcomingEventsError = "";

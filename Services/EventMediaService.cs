@@ -23,7 +23,7 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            return _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault().Medias.Where(x=>!x.IsDeleted && x.MediaType == mediaType).Skip(skip).Take(take).ToList();
+            return _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList().FirstOrDefault().Medias.Where(x=>!x.IsDeleted && x.MediaType == mediaType).Skip(skip).Take(take).ToList();
         }
     }
 }

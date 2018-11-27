@@ -69,7 +69,7 @@
         public static IActionResult GetSpotlights(
               [HttpTrigger(
                   AuthorizationLevel.Anonymous,
-                  RequestMethods.Get,
+                  RequestMethods.Post,
                 Route = "Spotlight/{*eventId}")]HttpRequest request,
                   string eventId,
               ILogger log,
@@ -169,7 +169,7 @@
         public static IActionResult Bookmark(
              [HttpTrigger(
                  AuthorizationLevel.Anonymous,
-               RequestMethods.Get,
+               RequestMethods.Post,
                Route = "Bookmark/{*eventId}")]HttpRequest request,
                  string eventId,
              ILogger log,
@@ -179,7 +179,7 @@
            {
                switch (request.Method)
                {
-                   case RequestMethods.Get:
+                   case RequestMethods.Post:
                         var message = new QueueMessage(){
                          QueueType = QueueType.BOOKMARK.ToString(),
                          EventId = eventId,
@@ -202,7 +202,7 @@
         public static IActionResult UnBookmark(
              [HttpTrigger(
                  AuthorizationLevel.Anonymous,
-               RequestMethods.Get,
+               RequestMethods.Post,
                Route = "UnBookmark/{*eventId}")]HttpRequest request,
                  string eventId,
              ILogger log,
@@ -212,7 +212,7 @@
            {
                switch (request.Method)
                {
-                   case RequestMethods.Get:
+                   case RequestMethods.Post:
                         var message = new QueueMessage(){
                          QueueType = QueueType.UNBOOKMARK.ToString(),
                          EventId = eventId,
@@ -235,7 +235,7 @@
         public static IActionResult Join(
              [HttpTrigger(
                  AuthorizationLevel.Anonymous,
-               RequestMethods.Get,
+               RequestMethods.Post,
                Route = "Join/{*eventId}")]HttpRequest request,
                  string eventId,
              ILogger log,
@@ -245,7 +245,7 @@
            {
                switch (request.Method)
                {
-                   case RequestMethods.Get:
+                   case RequestMethods.Post:
                         var message = new QueueMessage(){
                          QueueType = QueueType.JOIN.ToString(),
                          EventId = eventId,
@@ -268,7 +268,7 @@
         public static IActionResult UnJoin(
              [HttpTrigger(
                  AuthorizationLevel.Anonymous,
-               RequestMethods.Get,
+               RequestMethods.Post,
                Route = "UnJoin/{*eventId}")]HttpRequest request,
                  string eventId,
              ILogger log,
@@ -278,7 +278,7 @@
            {
                switch (request.Method)
                {
-                   case RequestMethods.Get:
+                   case RequestMethods.Post:
                         var message = new QueueMessage(){
                          QueueType = QueueType.UN_JOIN.ToString(),
                          EventId = eventId,

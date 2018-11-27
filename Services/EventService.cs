@@ -86,7 +86,7 @@ namespace com.petronas.myevents.api.Services
                 feedOptions.RequestContinuation = continuationKey;
             }
             var continuation = string.Empty;
-            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.IsFeatured, feedOptions, out continuation, x => x.OrderBy(y => y.IsDeleted));
+            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.IsFeatured, feedOptions, out continuation, x => x.OrderBy(y => y.EventDateFrom));
             return new EventListViewModel()
             {
                 Events = GetEventResponses(ev, userId),
@@ -108,7 +108,27 @@ namespace com.petronas.myevents.api.Services
                 feedOptions.RequestContinuation = continuationKey;
             }
             var continuation = string.Empty;
-            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.EventDateTo < DateTime.UtcNow && x.Members.Where(m => m.UserId == userId && !m.IsDeleted) != null, feedOptions, out continuation, x => x.OrderBy(y => y.EventDateTo));
+            var sqlQuery = $@"
+                SELECT *
+                FROM Events c
+                WHERE c.IsDeleted = @isDeleted
+                    AND c.EventDateTo < '{DateTime.UtcNow.ToString("yyyy-MM-ddThh-mm-ss")}'
+                    AND (
+                        ARRAY_CONTAINS(c.Members, {{ 'UserId': '{userId}' }}, true)
+                        OR ARRAY_CONTAINS(c.Bookmarks, {{ 'UserId': '{userId}' }}, true))
+                    ORDER BY c.EventDateFrom ASC";
+
+            var query = new SqlQuerySpec()
+            {
+                QueryText = sqlQuery,
+                Parameters = new SqlParameterCollection()
+                {
+                    new SqlParameter("@now", DateTime.UtcNow),
+                    new SqlParameter("@isDeleted", false),
+                    new SqlParameter("@userId", userId)
+                }
+            };
+            var ev = _eventRepository.GetBatch(query, feedOptions, out continuation);
             return new EventListViewModel()
             {
                 Events = GetEventResponses(ev, userId),
@@ -130,7 +150,7 @@ namespace com.petronas.myevents.api.Services
                 feedOptions.RequestContinuation = continuationKey;
             }
             var continuation = string.Empty;
-            var ev = _eventRepository.GetBatch(x => !x.IsDeleted, feedOptions, out continuation, x => x.OrderBy(y => y.EventDateTo));
+            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.EventDateTo > DateTime.UtcNow, feedOptions, out continuation, x => x.OrderBy(y => y.EventDateFrom));
             return new EventListViewModel()
             {
                 Events = GetEventResponses(ev, userId),
@@ -156,10 +176,11 @@ namespace com.petronas.myevents.api.Services
                 SELECT *
                 FROM Events c
                 WHERE c.IsDeleted = @isDeleted
-                    AND c.EventDateTo > '{DateTime.UtcNow.ToString("YYYY-MM-DDThh-mm-ss")}'
+                    AND c.EventDateTo > '{DateTime.UtcNow.ToString("yyyy-MM-ddThh-mm-ss")}'
                     AND (
                         ARRAY_CONTAINS(c.Members, {{ 'UserId': '{userId}' }}, true)
-                        OR ARRAY_CONTAINS(c.Bookmarks, {{ 'UserId': '{userId}' }}, true))";
+                        OR ARRAY_CONTAINS(c.Bookmarks, {{ 'UserId': '{userId}' }}, true))
+                    ORDER BY c.EventDateFrom ASC";
 
             var query = new SqlQuerySpec()
             {
@@ -193,7 +214,7 @@ namespace com.petronas.myevents.api.Services
                 feedOptions.RequestContinuation = continuationKey;
             }
             var continuation = string.Empty;
-            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.EventName.ToLower().Contains(searchKey.ToLower()), feedOptions, out continuation, x => x.OrderBy(y => y.EventDateTo));
+            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.EventName.ToLower().Contains(searchKey.ToLower()), feedOptions, out continuation, x => x.OrderBy(y => y.EventDateFrom));
             return new EventListViewModel()
             {
                 Events = GetEventResponses(ev, userId),

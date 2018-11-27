@@ -35,8 +35,8 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = 1,
                 EnableCrossPartitionQuery = true
             };
-            var joined = _eventRepository.GetAll(x=>!x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault().Members.Where(x => !x.IsDeleted && x.UserId == userId).FirstOrDefault();
-            if (joined == null)
+            var _event = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).ToList().FirstOrDefault();
+            if (!_event.Members.Any(x => !x.IsDeleted && x.UserId == userId))
             {
                 var newMember = new EventMember()
                 {
@@ -46,16 +46,14 @@ namespace com.petronas.myevents.api.Services
                     UserId = userId,
                     EventId = eventId
                 };
-                var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
-                ev.Members.Add(newMember);
-                await _eventRepository.Update(ev);
+                _event.Members.Add(newMember);
+                await _eventRepository.Update(_event);
             }
             else
             {
-                var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
-                var oldMember = ev.Members.Where(x => !x.IsDeleted && x.Id == joined.Id).FirstOrDefault();
+                var oldMember = _event.Members.Where(x => !x.IsDeleted && x.UserId ==userId).FirstOrDefault();
                 oldMember.EventMemberStatus = UserStatus.JOINED.ToString();
-                await _eventRepository.Update(ev);
+                await _eventRepository.Update(_event);
             }
             return true;
         }
@@ -68,13 +66,11 @@ namespace com.petronas.myevents.api.Services
                 EnableCrossPartitionQuery = true
             };
 
-            var joined = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, null).FirstOrDefault().Members.Where(x=>!x.IsDeleted).ToList();
-            var ev = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, feedOptions).FirstOrDefault();
-            foreach (var item in joined)
-            {
-                ev.Bookmarks.Remove(ev.Bookmarks.FirstOrDefault(x => x.Id == item.Id));
+            var _event = _eventRepository.GetAll(x => !x.IsDeleted && x.Id == eventId, null).ToList().FirstOrDefault();
+            for(var i=0 ;i<_event.Members.Count;i++){
+                _event.Members.Remove(_event.Members.FirstOrDefault(x => x.Id == _event.Members[i].Id));
             }
-            await _eventRepository.Update(ev);
+            await _eventRepository.Update(_event);
             return true;
         }
     }
