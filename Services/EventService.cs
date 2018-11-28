@@ -192,9 +192,27 @@ namespace com.petronas.myevents.api.Services
                 MaxItemCount = take,
                 EnableScanInQuery = true
             };
-            if (!string.IsNullOrEmpty(continuationKey)) feedOptions.RequestContinuation = continuationKey;
-            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.EventName.ToLower().Contains(searchKey.ToLower()),
-                feedOptions, out var continuation, x => x.OrderBy(y => y.EventDateFrom));
+           if (!string.IsNullOrEmpty(continuationKey)) feedOptions.RequestContinuation = continuationKey;
+            var sqlQuery = $@"
+                SELECT *
+                FROM Events c
+                WHERE c.IsDeleted = @isDeleted
+                    AND CONTAINS(LOWER(c.EventName), @searchKey) 
+                    AND (
+                        ARRAY_CONTAINS(c.Members, {{ 'UserId': '{userId}' }}, true)
+                        OR ARRAY_CONTAINS(c.Bookmarks, {{ 'UserId': '{userId}' }}, true))
+                    ORDER BY c.EventDateFrom ASC";
+
+            var query = new SqlQuerySpec
+            {
+                QueryText = sqlQuery,
+                Parameters = new SqlParameterCollection
+                {
+                    new SqlParameter("@isDeleted", false),
+                    new SqlParameter("@searchKey", searchKey.ToLower())
+                }
+            };
+            var ev = _eventRepository.GetBatch(query, feedOptions, out var continuation);
             return new EventListViewModel
             {
                 Events = GetEventResponses(ev, userId),
