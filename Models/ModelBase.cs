@@ -14,10 +14,10 @@ namespace com.petronas.myevents.api.Models
         [Key] [JsonProperty("id")] 
         public string Id { get; set; }
 
-        [JsonIgnore]
+        // [JsonIgnore]
         public bool IsDeleted { get; set; }
 
-        [JsonIgnore]
+        // [JsonIgnore]
         public string Discriminator { get; set; }
     }
 }
