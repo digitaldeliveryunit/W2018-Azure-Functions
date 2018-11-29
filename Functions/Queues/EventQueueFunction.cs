@@ -15,7 +15,7 @@ namespace com.petronas.myevents.api.Functions.Queues
         [FunctionName("EventQueueFunction")]
         public static async Task Run(
             [QueueTrigger(
-                "myeventsworkshopqueue",
+                QueueNames.MyEventsQueue,
                 Connection = AppSettings.StorageConnectionString)]
             string queueMessage,
             ILogger log,
