@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using com.petronas.myevents.api.Constants;
+using com.petronas.myevents.api.Extensions;
 using com.petronas.myevents.api.Repositories.Interfaces;
 using com.petronas.myevents.api.Services.Interfaces;
 using com.petronas.myevents.api.ViewModels;
@@ -32,14 +33,7 @@ namespace com.petronas.myevents.api.Services
                     UserStatus = s.Members.Any(x => !x.IsDeleted && x.UserId == user.Id)
                         ? s.Members.FirstOrDefault(x => !x.IsDeleted && x.UserId == user.Id)?.EventMemberStatus
                         : UserStatus.NEW.ToString(),
-                    SubAgendas = s.SubSessions.Select(ss => new EventSubAgendaResponse
-                    {
-                        SubAgendaId = ss.Id,
-                        AgendaName = ss.AgendaName,
-                        TimeFrom = ss.TimeFrom,
-                        TimeTo = ss.TimeTo,
-                        Venue = ss.Venue.VenueName
-                    }).ToList()
+                    SubAgendas = s.SubSessions.Where(x=>!x.IsDeleted).ToList().Map<List<EventSubAgendaResponse>>()
                 });
             return result;
         }
