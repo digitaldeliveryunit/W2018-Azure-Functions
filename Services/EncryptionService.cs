@@ -6,8 +6,8 @@ namespace com.petronas.myevents.api.Helpers
 {
     public static class EncryptionService
     {
-        private static readonly byte[] key = new byte[8] {1, 2, 3, 4, 5, 6, 7, 8};
-        private static readonly byte[] iv = new byte[8] {1, 2, 3, 4, 5, 6, 7, 8};
+        static readonly byte[] key = new byte[8] { 1, 2, 3, 4, 5, 6, 7, 8 };
+        static readonly byte[] iv = new byte[8] {1, 2, 3, 4, 5, 6, 7, 8};
 
         public static string Crypt(this string text)
         {

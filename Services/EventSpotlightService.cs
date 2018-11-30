@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using com.petronas.myevents.api.Extensions;
 using com.petronas.myevents.api.Repositories.Interfaces;
 using com.petronas.myevents.api.Services.Interfaces;
 using com.petronas.myevents.api.ViewModels;
@@ -28,14 +29,7 @@ namespace com.petronas.myevents.api.Services
                 ?.Spotlights.Where(x => !x.IsDeleted).ToList();
 
             if (spotlightList.Any())
-                return spotlightList.Select(f => new EventSpotlightResponse
-                {
-                    SpotlightId = f.Id,
-                    SpotlightName = f.SpotlightName,
-                    SpotlightTitle = f.SpotlightTitle,
-                    Description = f.SpotlightDescription,
-                    ImageUrl = f.ImageUrl
-                });
+                return spotlightList.Map<List<EventSpotlightResponse>>();
             return Enumerable.Empty<EventSpotlightResponse>();
         }
     }

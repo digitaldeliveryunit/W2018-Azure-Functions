@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using com.petronas.myevents.api.Constants;
-using com.petronas.myevents.api.Helpers;
 using com.petronas.myevents.api.Models;
 using com.petronas.myevents.api.Repositories.Interfaces;
 using com.petronas.myevents.api.Services.Interfaces;
@@ -73,7 +71,7 @@ namespace com.petronas.myevents.api.Services
             return ev == null ? null : GetEventResponse(ev, userId);
         }
 
-        public EventListViewModel GetFeaturedEvents(string continuationKey, int take, string userId)
+        public PagedResults<EventResponse> GetFeaturedEvents(string continuationKey, int take, string userId)
         {
             var feedOptions = new FeedOptions
             {
@@ -81,18 +79,11 @@ namespace com.petronas.myevents.api.Services
                 EnableScanInQuery = true
             };
             if (!string.IsNullOrEmpty(continuationKey)) feedOptions.RequestContinuation = continuationKey;
-            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.IsFeatured, feedOptions, out var continuation,
-                x => x.OrderBy(y => y.EventDateFrom));
-            return new EventListViewModel
-            {
-                Events = GetEventResponses(ev, userId),
-                ContinuationKey = !string.IsNullOrEmpty(continuation) ? continuation.Crypt() : string.Empty,
-                Take = take,
-                HasNextPage = !string.IsNullOrEmpty(continuation)
-            };
+            return _eventRepository.GetBatch(x => !x.IsDeleted && x.IsFeatured, feedOptions, out var continuation,
+                x => x.OrderBy(y => y.EventDateFrom)).ToPagedEventResults(continuation, userId);
         }
 
-        public EventListViewModel GetPastEvents(string continuationKey, int take, string userId)
+        public PagedResults<EventResponse> GetPastEvents(string continuationKey, int take, string userId)
         {
             var feedOptions = new FeedOptions
             {
@@ -118,17 +109,10 @@ namespace com.petronas.myevents.api.Services
                     new SqlParameter("@isDeleted", false)
                 }
             };
-            var ev = _eventRepository.GetBatch(query, feedOptions, out var continuation);
-            return new EventListViewModel
-            {
-                Events = GetEventResponses(ev, userId),
-                ContinuationKey = !string.IsNullOrEmpty(continuation) ? continuation.Crypt() : string.Empty,
-                Take = take,
-                HasNextPage = !string.IsNullOrEmpty(continuation)
-            };
+            return _eventRepository.GetBatch(query, feedOptions, out var continuation).ToPagedEventResults(continuation, userId);
         }
 
-        public EventListViewModel GetUpcomingAllEvents(string continuationKey, int take, string userId)
+        public PagedResults<EventResponse> GetUpcomingAllEvents(string continuationKey, int take, string userId)
         {
             var feedOptions = new FeedOptions
             {
@@ -136,18 +120,13 @@ namespace com.petronas.myevents.api.Services
                 EnableScanInQuery = true
             };
             if (!string.IsNullOrEmpty(continuationKey)) feedOptions.RequestContinuation = continuationKey;
-            var ev = _eventRepository.GetBatch(x => !x.IsDeleted && x.EventDateTo > DateTime.UtcNow, feedOptions,
-                out var continuation, x => x.OrderBy(y => y.EventDateFrom));
-            return new EventListViewModel
-            {
-                Events = GetEventResponses(ev, userId),
-                ContinuationKey = !string.IsNullOrEmpty(continuation) ? continuation.Crypt() : string.Empty,
-                Take = take,
-                HasNextPage = !string.IsNullOrEmpty(continuation)
-            };
+            return _eventRepository
+                .GetBatch(x => !x.IsDeleted && x.EventDateTo > DateTime.UtcNow, feedOptions,
+                    out var continuation, x => x.OrderBy(y => y.EventDateFrom))
+                .ToPagedEventResults(continuation, userId);
         }
 
-        public EventListViewModel GetUpcomingEvents(string continuationKey, int take, string userId)
+        public PagedResults<EventResponse> GetUpcomingEvents(string continuationKey, int take, string userId)
         {
             var feedOptions = new FeedOptions
             {
@@ -175,17 +154,10 @@ namespace com.petronas.myevents.api.Services
                     new SqlParameter("@userId", userId)
                 }
             };
-            var ev = _eventRepository.GetBatch(query, feedOptions, out var continuation);
-            return new EventListViewModel
-            {
-                Events = GetEventResponses(ev, userId),
-                ContinuationKey = !string.IsNullOrEmpty(continuation) ? continuation.Crypt() : string.Empty,
-                Take = take,
-                HasNextPage = !string.IsNullOrEmpty(continuation)
-            };
+            return _eventRepository.GetBatch(query, feedOptions, out var continuation).ToPagedEventResults(continuation, userId);
         }
 
-        public EventListViewModel Search(string searchKey, string continuationKey, int take, string userId)
+        public PagedResults<EventResponse> Search(string searchKey, string continuationKey, int take, string userId)
         {
             var feedOptions = new FeedOptions
             {
@@ -212,14 +184,7 @@ namespace com.petronas.myevents.api.Services
                     new SqlParameter("@searchKey", searchKey.ToLower())
                 }
             };
-            var ev = _eventRepository.GetBatch(query, feedOptions, out var continuation);
-            return new EventListViewModel
-            {
-                Events = GetEventResponses(ev, userId),
-                ContinuationKey = !string.IsNullOrEmpty(continuation) ? continuation.Crypt() : string.Empty,
-                Take = take,
-                HasNextPage = !string.IsNullOrEmpty(continuation)
-            };
+            return _eventRepository.GetBatch(query, feedOptions, out var continuation).ToPagedEventResults(continuation, userId);
         }
 
         private EventResponse GetEventResponse(Event _event, string userId)
@@ -244,30 +209,6 @@ namespace com.petronas.myevents.api.Services
                     ? _event.Members.FirstOrDefault(x => !x.IsDeleted && x.UserId == userId)?.EventMemberStatus
                     : UserStatus.NEW.ToString()
             };
-        }
-
-        private List<EventResponse> GetEventResponses(IEnumerable<Event> events, string userId)
-        {
-            return events.Select(_event => new EventResponse
-            {
-                EventId = _event.Id,
-                ImageUrl = _event.EventImageUrl,
-                EventDescription = _event.EventDescription,
-                EventStatus = _event.EventStatus,
-                EventName = _event.EventName,
-                EventLocation = _event.Location,
-                EventType = _event.EventType,
-                DateTo = _event.EventDateTo,
-                DateFrom = _event.EventDateFrom,
-                Venue = _event.Venue.VenueName,
-                IsFeatured = _event.IsFeatured,
-                SurveyUrl = _event.SurveyUrl,
-                SurveyResultUrl = _event.SurveyResultUrl,
-                IsBookmark = _event.Bookmarks != null && _event.Bookmarks.Any(x => !x.IsDeleted && x.UserId == userId),
-                UserStatus = _event.Members != null && _event.Members.Any(x => !x.IsDeleted && x.UserId == userId)
-                    ? _event.Members.FirstOrDefault(x => !x.IsDeleted && x.UserId == userId)?.EventMemberStatus
-                    : UserStatus.NEW.ToString()
-            }).ToList();
         }
     }
 }

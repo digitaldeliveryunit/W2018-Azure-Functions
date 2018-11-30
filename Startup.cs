@@ -1,5 +1,6 @@
 using System;
 using com.petronas.myevents.api;
+using com.petronas.myevents.api.Configurations;
 using com.petronas.myevents.api.Helpers;
 using com.petronas.myevents.api.Migrations;
 using com.petronas.myevents.api.Repositories;
@@ -20,15 +21,14 @@ namespace com.petronas.myevents.api
         public void Configure(IWebJobsBuilder builder)
         {
             builder.AddDependencyInjection<ServiceProviderBuilder>();
+            AutoMapperConfig.Configure();
         }
-        
+
         internal class ServiceProviderBuilder : IServiceProviderBuilder
         {
 
             public IServiceProvider Build()
             {
-
-
                 var services = new ServiceCollection();
 
                 services.AddScoped<IEventRepository, EventRepository>();

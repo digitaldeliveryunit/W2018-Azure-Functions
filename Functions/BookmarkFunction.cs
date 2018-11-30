@@ -1,14 +1,12 @@
 ﻿using System;
 using com.petronas.myevents.api.Constants;
 using com.petronas.myevents.api.Helpers;
-using com.petronas.myevents.api.Services.Interfaces;
 using com.petronas.myevents.api.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Willezone.Azure.WebJobs.Extensions.DependencyInjection;
 
 namespace com.petronas.myevents.api.Functions
@@ -24,7 +22,7 @@ namespace com.petronas.myevents.api.Functions
             HttpRequest request,
             string eventId,
             ILogger log,
-            [Inject] IEventService eventService, [Inject] QueueService queueService)
+            [Inject] QueueService queueService)
         {
             try
             {

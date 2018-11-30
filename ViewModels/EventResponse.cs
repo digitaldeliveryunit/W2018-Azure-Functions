@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using com.petronas.myevents.api.Models;
 
 namespace com.petronas.myevents.api.ViewModels
@@ -21,13 +20,5 @@ namespace com.petronas.myevents.api.ViewModels
         public string SurveyResultUrl { get; set; }
         public bool IsBookmark { get; set; }
         public string UserStatus { get; set; }
-    }
-
-    public class EventListViewModel
-    {
-        public List<EventResponse> Events { get; set; }
-        public bool HasNextPage { get; set; }
-        public string ContinuationKey { get; set; }
-        public int Take { get; set; }
     }
 }
