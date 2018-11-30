@@ -20,7 +20,7 @@ namespace com.petronas.myevents.api.Functions
             [HttpTrigger(
                 AuthorizationLevel.Anonymous,
                 RequestMethods.Post,
-                Route = "UnJoin/{*eventId}")]
+                Route = "UnJoin/{eventId}")]
             HttpRequest request,
             string eventId,
             ILogger log,

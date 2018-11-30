@@ -20,7 +20,7 @@ namespace com.petronas.myevents.api.Functions
             [HttpTrigger(
                 AuthorizationLevel.Anonymous,
                 RequestMethods.Get,
-                Route = "Agendas/{*eventId}")]
+                Route = "Agendas/{eventId}")]
             HttpRequest request,
             string eventId,
             ILogger log,

@@ -18,7 +18,7 @@ namespace com.petronas.myevents.api.Functions
             [HttpTrigger(
                 AuthorizationLevel.Anonymous,
                 RequestMethods.Post,
-                Route = "Bookmark/{*eventId}")]
+                Route = "Bookmark/{eventId}")]
             HttpRequest request,
             string eventId,
             ILogger log,
